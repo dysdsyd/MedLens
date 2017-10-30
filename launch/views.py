@@ -3,10 +3,6 @@ from django.template import RequestContext
 
 # Create your views here.
 import warnings, os
-
-import warnings
-from rpy2.rinterface import RRuntimeWarning
-warnings.filterwarnings("ignore", category=RRuntimeWarning)
 import sys
 
 sys.path.append('launch/03_PyScripts/')

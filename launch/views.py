@@ -3,8 +3,6 @@ from django.template import RequestContext
 
 # Create your views here.
 import warnings, os
-import numpy as np
-import pandas as pd
 import sys
 
 sys.path.append('launch/03_PyScripts/')

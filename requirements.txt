@@ -5,6 +5,3 @@ psycopg2
 numpy
 pandas
 whitenoise
-seaborn
-matplotlib
-plotly

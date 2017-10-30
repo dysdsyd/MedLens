@@ -1,8 +1,8 @@
 
-#package_list <- c("data.table", "ggplot2", "scales", "dplyr", "caret", "partykit", "e1071", "rBayesianOptimization",
-#                  "gridExtra", "car", "knitr", "plyr")
+package_list <- c("data.table", "ggplot2", "scales", "dplyr", "caret", "partykit", "e1071", "rBayesianOptimization",
+                 "gridExtra", "car", "knitr", "plyr")
 
-#install.packages(package_list)
+install.packages(package_list)
 
 library(data.table)
 library(ggplot2)

@@ -5,3 +5,7 @@ psycopg2
 numpy
 pandas
 whitenoise
+rpy2
+seaborn
+matplotlib
+plotly

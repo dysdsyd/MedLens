@@ -3,13 +3,9 @@ from rpy2.robjects.packages import STAP
 from rpy2.robjects import r, pandas2ri
 from rpy2.robjects.packages import importr
 import rpy2.robjects.packages as rpackages
-import ipywidgets as widgets
-from ipywidgets import interact, interactive, fixed, interact_manual, SelectMultiple, Layout, RadioButtons, Checkbox, HBox, VBox, Box, IntSlider, Select
 import pandas as pd
 import numpy as np
-from IPython.display import Image, IFrame, HTML, display
-import warnings, os
-warnings.filterwarnings('ignore')
+import os
 
 
 class MOB(object):

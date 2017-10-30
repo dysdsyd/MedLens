@@ -3,3 +3,5 @@ heroku
 gunicorn 
 psycopg2 
 whitenoise
+numpy 
+pandas

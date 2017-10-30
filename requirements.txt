@@ -4,4 +4,4 @@ gunicorn
 psycopg2 
 numpy
 pandas
-
+whitenoise

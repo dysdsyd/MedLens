@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Launch Analytics</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+</head>
+
+<body>
+
+<header>
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">Launch Analytics</a>
+			</div>
+			<ul class="nav navbar-nav">
+				<li class="active"><a href="#">Home</a></li>
+			</ul>
+		</div>
+	</nav>	
+</header>	
+
+
+<div class = "container-fluid" style=" background:#dddedf; width: 30%; border: 2px solid #c2c4c7; padding: 10px; margin: 10px;">
+	<h3> Data Preparation </h3>
+	<div class="col-xs-8">
+		<form action = "/run" method = "get" class = "form-horizontal">
+			<br>
+			<div class="form-group">
+				<label for="part">Partion</label>
+				<br>
+				<select name = "part" id = "part" class="selectpicker"  multiple data-live-search="true" title = " " >
+					<option value="balance">balance </option>
+					<option value="age">age  </option>
+					<option value="campaign">balance</option>
+					<option value="pdays">pdays/option>
+					<option value="previous">previous</option>
+					<option value="calls">calls</option>
+					<option value="emails">emails</option>
+					<option value="coupons">coupons</option>
+					<option value="job">job</option>
+					<option value="marital">marital</option>
+					<option value="education">education</option>
+					<option value="housing">housing</option>
+					<option value="contact">contact</option>
+					<option value="month">month</option>
+					<option value="poutcome">poutcome</option>
+					<option value="day">day</option>
+				</select>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="reg">Regression</label>
+				<br>
+				<select name = "reg" id = "reg" class="selectpicker" multiple data-live-search="true" title = " " >
+					<option value="balance">balance </option>
+					<option value="age">age  </option>
+					<option value="campaign">balance</option>
+					<option value="pdays">pdays/option>
+					<option value="previous">previous</option>
+					<option value="calls">calls</option>
+					<option value="emails">emails</option>
+					<option value="coupons">coupons</option>
+					<option value="job">job</option>
+					<option value="marital">marital</option>
+					<option value="education">education</option>
+					<option value="housing">housing</option>
+					<option value="contact">contact</option>
+					<option value="month">month</option>
+					<option value="poutcome">poutcome</option>
+					<option value="day">day</option>
+				</select>
+			</div>
+			<br>
+			<div class="form-group">
+				<label for="target">Target</label>
+				<br>
+				<select name = "target" id = "target" class="selectpicker" multiple data-live-search="true" title = " " >
+					<option value="target">target</option>
+				</select>
+			</div>
+		</form>
+	</div>	
+	<h3> Hyperparameter Setting </h3>
+	<div class="col-xs-8">
+		<form action = "/run" method = "get">
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" style="text-indent: 1em;">Depth</span>
+				<input class="form-control" name = "depth" id = "depth" type="number" step="any" value = "8"/>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" >Min Size</span>
+				<input class="form-control" name = "min_size" id = "min_size" type="number" step="any" value = "200"/>
+			</div>
+			<br>
+			<div class="input-group">
+				<span class="input-group-addon" style="text-indent: 2em;"> Split  </span>
+				<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "0.8"/>
+			</div>
+			<br>
+			<div class="input-group" style="text-indent: 0.7em;">
+				<span class="input-group-addon">Version </span>
+				<input class="form-control" name = "ver_string" id = "ver_string" type="text" value = 'default'/>
+			</div>
+			<br>
+			<div>
+				<input type = "Submit" value = "Run"/>
+			</div>
+		</form>	
+	</div>	
+</div>	
+</body>	
+</html>	

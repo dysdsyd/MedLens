@@ -1,0 +1,5 @@
+Django
+heroku
+gunicorn 
+psycopg2 
+whitenoise

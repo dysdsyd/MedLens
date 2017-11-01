@@ -1,9 +1,8 @@
-Django
-heroku
-gunicorn 
+django==1.11.3
+gunicorn==19.7.1
 psycopg2 
-numpy
+numpy==1.13.1
 pandas==0.20.3
-whitenoise
+whitenoise==3.3.1
 plotly==1.9.6
 python-dateutil

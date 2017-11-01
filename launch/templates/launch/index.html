@@ -13,11 +13,12 @@
 		    }		
 		h1 {
 		  font-size: 50px;
-		  color : white;
+		  color : #ffffff;
 		  top :60%;
 		  left:40%;
 		  position:absolute;
 		  float:left;
+		  opacity: 1;
 		   } 
 
 		.logo {
@@ -33,6 +34,19 @@
 		        width:500px;
 		        background-color:white;
 		        }
+		div#loading {
+				position: fixed;
+				margin-right: 1%;
+				width: 70%;
+				height: 100%;
+				z-index: 9999;
+			    background: url(https://codesquery.com/wp-content/uploads/2016/12/hourglass.svg)50% 50% no-repeat rgb(249,249,249);;
+			    cursor: wait;
+			    display: none;
+			}
+		.hide {
+ 			 display: none;
+			}
 	</style>
 
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,79 +60,75 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+// ]]>
+	</script>
+	<script type="text/javascript">
+		$(document).on('change', '.div-toggle', function() {
+		  var target = $(this).data('target');
+		  var show = $("option:selected", this).data('show');
+		  $(target).children().addClass('hide');
+		  $(show).removeClass('hide');
+		});
+		$(document).ready(function(){
+			$('.div-toggle').trigger('change');
+		});       
+	</script>
 </head>
 
 <body>
-
 <header>
-	<nav class="navbar navbar-light fixed-top">
+	<nav class="navbar">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand">
 					<img src= "{% static "media/zslogo.jpg" %}" width = "150" height = "130" class="logo" alt="">
-					<h1>Launch Analytics</h1>
+					<h1 style="color: white; opacity: .5; font-size: 40px;"><strong>Launch Analytics</strong></h1>
 				</a>
 			</div>
 		</div>
 	</nav>	
 </header>	
 
+
+<!-- Working Area-->
 <div class="row">
+	<!-- Setting Area-->
 	<div class="col-sm-3">
-	<div class = "container-fluid well well-sm" style=" width: 90%; padding: 16%; margin: auto; margin-right: 0%; ">
-		<form action = "" method = "get">
+	<div class = "container well well-sm" style=" width: 90%; padding: 14%; margin: auto; margin-right: 0%; ">
+		<legend class="text-center"><h3>Model Universe Setting</h3></legend>
+		<form class="col-sm-12" action = "" method = "get">
 			<fieldset>
-				<legend class="text-center"><h3>Model Universe Setting</h3></legend>
 				<div class="form-group row">
 					<label for="seg" class="col-2 col-form-label">Segmentation Variables</label>
 					<div class="col-10">
-					<select name = "seg" id = "seg" class="selectpicker"  multiple data-live-search="true" title = " ">
-						<option value="balance">balance </option>
-						<option value="age">age  </option>
-						<option value="campaign">campaign</option>
-						<option value="pdays">pdays</option>
-						<option value="previous">previous</option>
-						<option value="calls">calls</option>
-						<option value="emails">emails</option>
-						<option value="coupons">coupons</option>
-						<option value="job">job</option>
-						<option value="marital">marital</option>
-						<option value="education">education</option>
-						<option value="housing">housing</option>
-						<option value="contact">contact</option>
-						<option value="month">month</option>
-						<option value="poutcome">poutcome</option>
-						<option value="day">day</option>
+					<select name = "seg" id = "seg" class="selectpicker form-control"  multiple data-live-search="true" title = " ">
+						{% for var in variables %}
+							<option value="{{var}}">{{var}}</option>
+						{% endfor %}
 					</select>
 					</div>
 				</div>
 				<div class="form-group row">	
 					<label for="reg" class="col-2 col-form-label">Regression Variables</label>
 					<div class="col-10">
-					<select name = "reg" id = "reg" class="selectpicker" multiple data-live-search="true" title = " ">
-						<option value="balance">balance </option>
-						<option value="age">age </option>
-						<option value="campaign">campaign</option>
-						<option value="pdays">pdays</option>
-						<option value="previous">previous</option>
-						<option value="calls">calls</option>
-						<option value="emails">emails</option>
-						<option value="coupons">coupons</option>
-						<option value="job">job</option>
-						<option value="marital">marital</option>
-						<option value="education">education</option>
-						<option value="housing">housing</option>
-						<option value="contact">contact</option>
-						<option value="month">month</option>
-						<option value="poutcome">poutcome</option>
-						<option value="day">day</option>
+					<select name = "reg" id = "reg" class="selectpicker form-control" multiple data-live-search="true" title = " ">
+						{% for var in variables %}
+							<option value="{{var}}">{{var}}</option>
+						{% endfor %}
 					</select>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="target" class="col-2 col-form-label">Target Variable</label>
 					<div class="col-10">
-					<select name = "target" id = "target" class="selectpicker" multiple data-live-search="true" title = " " placeholder="Target Varible">
+					<select name = "target" id = "target" class="selectpicker form-control" multiple data-live-search="true" title = " " placeholder="Target Varible">
 						<option value="target">target</option>
 					</select>
 					</div>
@@ -134,7 +144,7 @@
 				</div>
 				<div class="form-group row">
 					<label for="min_size" class="col-2 col-form-label">Min Size</label>
-					<div class="col-10" >
+					<div class="col-10"  >
 					<input class="form-control" name = "min_size" id = "min_size" type="number" step="any" value = "200"/>
 					</div>
 				</div>
@@ -144,49 +154,62 @@
 					<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "0.8"/>
 					</div>	
 				</div>
-				<div class="form-group row">
+				<!--div class="form-group row">
 					<label for="ver_string" class="col-2 col-form-label">Version</label>
-					<div class="col-10" >
+					<div class="col-10" style="width: 75%;">
 					<input class="form-control" name = "ver_string" id = "ver_string" type="text" value = 'default'/>
 					</div>
-				</div>
+				</div-->
 				<div class="form-group row text-right">
-					<input class="btn btn-primary btn-lg" type = "Submit" value = "Run"/>
+					<input class="btn btn-primary btn-lg" type = "Submit" value = "Run" onclick="loading();" />
 				</div>
 			</fieldset>
 		</form>
 	</div>
 	</div>
 
-
+	<!-- Output Area -->
 	<div class="col-sm-9">
-	<div class = "container-fluid well well-sm" style=" width: 95%; padding: 2%; margin: auto; margin-left: 0% ">
+	<div id ="loading"> </div>
+	<div id="content" class = "container well well-sm" style=" width: 95%; padding: 2%; margin: auto; margin-left: 0% ">
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#mob">MOB Summary</a></li>
-			<li><a data-toggle="tab" href="#viz">Visual Analysis</a></li>
-			<li><a data-toggle="tab" href="#conc">Conclusion</a></li>
+			<li class="active"><a data-toggle="tab" href="#mob">Model Summary</a></li>
+			<li><a data-toggle="tab" href="#viz">Data Discovery</a></li>
+			<li><a data-toggle="tab" href="#conc">Model Effectiveness</a></li>
 		</ul>
 		<div class="tab-content">
+			<!-- Model Summary -->
 			<div id="mob" class="tab-pane fade in active">
 				<legend class="text-center"><h3>MOB Tree</h3></legend>	
-				<img src="http://jmvidal.cse.sc.edu/talks/decisiontrees/dt.png" style="max-width: 100%; max-height: auto;">
+				<img src= "{% static "media/box_tree.jpg" %}" style="max-width: 100%; max-height: auto;">
 				<br>
 				<legend class="text-center"><h3>Impact Table</h3></legend>
+				<source src="{% static "media/overall_impact.html" %}" type="table">
 				<br>
-				<legend class="text-center"><h3>Notes</h3></legend>
+				<legend class="text-center"><h3>Commentary</h3></legend>
 			</div>
 
 
-
+			<!-- Data Discovery -->
 			<div id="viz" class="tab-pane fade">
 				<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
 			</div>
 
 
+			<!-- Model Effectiveness -->
+			<div id="conc" class="tab-pane fade">
+				<select class="div-toggle selectpicker" data-target=".plot_content" data-live-search="true">
+					{% for var in reg %}
+						<option value="{{var}}" data-show=".pdays">{{var}}</option>
+					{% endfor %}
+				</select>	
 
-			<div id="conc" class="tab-pane fade"><p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+				<div class="plot_content">
+					{% for var in reg %}
+						<div class="pdays hide">{% autoescape off %}{{pdays}}{% endautoescape %}</div>
+					{% endfor %}
+				</div>
 			</div>
-		</div>
 	</div>
 	</div>	
 </div>

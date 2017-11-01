@@ -5,4 +5,4 @@ numpy==1.13.1
 pandas==0.20.3
 whitenoise==3.3.1
 plotly==1.9.6
-python-dateutil
+python-dateutil==2.6.1

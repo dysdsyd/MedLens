@@ -180,7 +180,9 @@ def exp_vs_eff (pivot, X_var, Y_var, pivot_on, color_on, size):
 	                   xaxis=x_template,
 	                   yaxis=y_template,
 	                   title='Effectiveness VS Exposure',
-	                   titlefont=dict(color='black')
+	                   titlefont=dict(color='black'),
+	                   paper_bgcolor='rgba(0,0,0,0)',
+	                   plot_bgcolor='rgba(0,0,0,0)'
 	                   )
 
 	trace1 = go.Scatter(

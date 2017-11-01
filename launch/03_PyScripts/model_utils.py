@@ -1,8 +1,8 @@
-import rpy2
-from rpy2.robjects.packages import STAP
-from rpy2.robjects import r
-from rpy2.robjects.packages import importr
-import rpy2.robjects.packages as rpackages
+# import rpy2
+# from rpy2.robjects.packages import STAP
+# from rpy2.robjects import r
+# from rpy2.robjects.packages import importr
+# import rpy2.robjects.packages as rpackages
 import pandas as pd
 import numpy as np
 import os
@@ -28,6 +28,7 @@ class MOB(object):
 		self.seg_lvl_data = None
 		self.beta = None
 		self.var_mean = None
+		self.overall_impact = None
 		self.id_type = {self.id_key : str}
 
 		
@@ -115,6 +116,7 @@ class MOB(object):
 		#print ('******************* Overall Impact *********************')
 		o_imp = np.sum(temp_data[i_var],axis=0)/np.sum(np.sum(temp_data[i_var],axis=0))
 		o_imp = o_imp.reset_index()
+		self.overall_impact = o_imp
 		#display(o_imp)
 		o_imp.to_html('launch/static/media/overall_impact.html')
 		#print ('\n******************* Segment Level Impact ***********************')

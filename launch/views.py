@@ -35,6 +35,7 @@ def run_mob(request):
 		reg =['balance', 'age', 'campaign', 'pdays', 'previous','calls', 'emails', 'coupons']
 	if target == []:
 		target = ['target']
+
 	if depth and min_size and trn_split !=None:
 		model = model_utils.MOB(data_path, full_data_path,id_key='ID', depth=int(depth), min_size=int(min_size), trn_split=float(trn_split), 
 			ver_string='default')
@@ -48,9 +49,16 @@ def run_mob(request):
 					"depth":model.depth, "min_size":model.min_size, "trn_split":model.trn_split}
 		#code
 		model.seg_lvl_data['Size'] = pd.cut(model.seg_lvl_data['target'], 4, labels=[28,31,34,37])
+		exp_plots = []
 		for X_var, Y_var in zip(model.beta,model.var_mean):
 			plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff(model.seg_lvl_data, X_var, Y_var, "nodes", "age", 'Size'))
-			template_input[Y_var] = plot_html
+			exp_plots.append((Y_var,plot_html))
+		# adding plots to the dictionary
+		template_input["exp_plots"] = exp_plots
+		#adding overall impact table
+		template_input["overall_impact"] = model.overall_impact.to_html( justify='center', classes=
+			"table table-hover", header=False, index=False)
+		
 		print ('***************** temp input *****************')
 		# print (template_input)
 		print (target, depth, min_size, trn_split)

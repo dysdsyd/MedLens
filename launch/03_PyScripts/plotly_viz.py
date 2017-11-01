@@ -5,7 +5,7 @@ import plotly.graph_objs as go
 from plotly import tools
 from plotly.offline.offline import _plot_html
 #import seaborn as sns
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 

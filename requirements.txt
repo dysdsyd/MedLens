@@ -5,4 +5,4 @@ psycopg2
 numpy
 pandas
 whitenoise
-ploltly==1.9.6
+plotly==1.9.6

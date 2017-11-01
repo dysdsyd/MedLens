@@ -4,7 +4,7 @@ heroku
 gunicorn 
 psycopg2 
 numpy
-pandas
+pandas==0.20.3
 whitenoise
 plotly==1.9.6
 python-dateutil

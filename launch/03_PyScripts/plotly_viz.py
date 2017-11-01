@@ -4,7 +4,7 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
 from plotly import tools
 from plotly.offline.offline import _plot_html
-import seaborn as sns
+#import seaborn as sns
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
@@ -207,29 +207,29 @@ def exp_vs_eff (pivot, X_var, Y_var, pivot_on, color_on, size):
 
 
 
-def joint_plot(X, Y, u_perc_x, u_perc_y, train_df):
-	ulimit = np.percentile(train_df[Y].values, u_perc_y)
-	print ('------------------------------------------------------------------------------------------')
-	Y_IDS = (np.unique(train_df['IMS_ID'].loc[train_df[Y]>ulimit]))
-	print ('Unique IDs Dropped for '+Y+' = ',len(Y_IDS))
-	print ('------------------------------------------------------------------------------------------')
-	#llimit = np.percentile(train_df[Y].values, 5)
-	train_df[Y].loc[train_df[Y]>ulimit] = ulimit
-	#train_df[Y].ix[train_df[Y]<llimit] = llimit
+# def joint_plot(X, Y, u_perc_x, u_perc_y, train_df):
+# 	ulimit = np.percentile(train_df[Y].values, u_perc_y)
+# 	print ('------------------------------------------------------------------------------------------')
+# 	Y_IDS = (np.unique(train_df['IMS_ID'].loc[train_df[Y]>ulimit]))
+# 	print ('Unique IDs Dropped for '+Y+' = ',len(Y_IDS))
+# 	print ('------------------------------------------------------------------------------------------')
+# 	#llimit = np.percentile(train_df[Y].values, 5)
+# 	train_df[Y].loc[train_df[Y]>ulimit] = ulimit
+# 	#train_df[Y].ix[train_df[Y]<llimit] = llimit
 
-	ulimit = np.percentile(train_df[X].values, u_perc_x)
-	print ('------------------------------------------------------------------------------------------')
-	X_IDS = np.unique(train_df['IMS_ID'].loc[train_df[X]>ulimit])
-	print ('Unique IDs Dropped for '+X+' = ',len(X_IDS))
-	print ('------------------------------------------------------------------------------------------')
-	#llimit = np.percentile(train_df[X].values, 5)
-	train_df[X].loc[train_df[X]>ulimit] = ulimit
-	#train_df[X].ix[train_df[X]<llimit] = llimit
+# 	ulimit = np.percentile(train_df[X].values, u_perc_x)
+# 	print ('------------------------------------------------------------------------------------------')
+# 	X_IDS = np.unique(train_df['IMS_ID'].loc[train_df[X]>ulimit])
+# 	print ('Unique IDs Dropped for '+X+' = ',len(X_IDS))
+# 	print ('------------------------------------------------------------------------------------------')
+# 	#llimit = np.percentile(train_df[X].values, 5)
+# 	train_df[X].loc[train_df[X]>ulimit] = ulimit
+# 	#train_df[X].ix[train_df[X]<llimit] = llimit
 
-	plt.figure(figsize=(8,8))
-	sns.jointplot(x=train_df[X].values, y=train_df[Y].values, size=10, color='g')
-	plt.ylabel(Y, fontsize=12)
-	plt.xlabel(X, fontsize=12)
-	plt.title(Y+" VS "+X, fontsize=15)
-	plt.show()
-	return X_IDS, Y_IDS
+# 	plt.figure(figsize=(8,8))
+# 	sns.jointplot(x=train_df[X].values, y=train_df[Y].values, size=10, color='g')
+# 	plt.ylabel(Y, fontsize=12)
+# 	plt.xlabel(X, fontsize=12)
+# 	plt.title(Y+" VS "+X, fontsize=15)
+# 	plt.show()
+# 	return X_IDS, Y_IDS

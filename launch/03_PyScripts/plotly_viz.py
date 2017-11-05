@@ -9,6 +9,7 @@ from plotly.offline.offline import _plot_html
 import pandas as pd
 import numpy as np
 
+	
 
 
 '''
@@ -25,7 +26,7 @@ def multi_variate_bar(data, var, quater='all'):
 	x_template = dict(title=var,showticklabels=True,showgrid=True,showline=True,zeroline=True,zerolinewidth=1, #,tickangle=0
 	                  titlefont=dict(
 	                      #family='Arial, sans-serif',
-	                      size=14,
+	                      size=14,					
 	                      #color='black',
 	                  ))
 	y_template = dict(title='XTAMPZA TRx',showticklabels=True,showgrid=True,showline=True,zeroline=True,zerolinewidth=1,

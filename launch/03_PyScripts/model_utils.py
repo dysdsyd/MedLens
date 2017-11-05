@@ -19,7 +19,7 @@ class MOB(object):
 		self.min_size = min_size
 		self.trn_split = trn_split
 		self.ver_string = ver_string
-		self.reg =['balance', 'age', 'campaign', 'pdays', 'previous','calls', 'emails', 'coupons']
+		self.reg =['balance', 'campaign', 'pdays', 'previous','calls', 'emails']
 		self.part =['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'day','age']
 		self.target = ['target']
 		self.formula = None
@@ -95,17 +95,15 @@ class MOB(object):
 		self.beta = ['beta_'+i for i in self.var_mean]
 		## Todo add more options
 		color_col = ['month']
-		Impact_Var = self.var_mean+self.beta+self.target+color_col
+		Impact_Var = self.var_mean+self.beta+self.target
 		if self.impact_Q4:
 			print ('*******************\nImpact over latest quaters\n*******************')
-			master_data = self.master_data[self.master_data['Quater'] == 'Q4']
+			master_data = self.master_data[self.masster_data['Quater'] == 'Q4']
 		else:
 			print ('*******************\nImpact over all quaters\n*******************')
 			master_data = self.master_data
 		master_data['(Intercept)'] = 1
 		self.seg_lvl_data = master_data.groupby('nodes')[Impact_Var].mean().reset_index()
-
-
 		i_var = ['Impact_'+i for i in self.var_mean]
 		temp_data = pd.DataFrame(columns=i_var)
 		for m, b in zip(self.seg_lvl_data[self.var_mean].values, self.seg_lvl_data[self.beta].values):
@@ -139,3 +137,10 @@ class MOB(object):
 
 
 
+							<div class="exp_graph{{exp_plot.0}} exp_color{{exp_plot.1}} hide">
+								{% autoescape off %}{{exp_plot.}}{% endautoescape %}
+							</div>
+													{% for exp_plot in exp_plots %}
+							<h2>New Plot</h2>
+							{{exp_plot}}
+						{% endfor %}

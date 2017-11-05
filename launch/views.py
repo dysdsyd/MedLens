@@ -7,6 +7,7 @@ import sys
 import pandas as pd
 import numpy as np 
 
+
 sys.path.append('launch/03_PyScripts/')
 data_path = 'launch/01_Data/bank_mkt.csv'
 full_data_path = 'launch/01_Data/bank_mkt.csv'
@@ -32,7 +33,7 @@ def run_mob(request):
 	if seg == []:
 		seg = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'day','age']
 	if reg == []:
-		reg =['balance', 'age', 'campaign', 'pdays', 'previous','calls', 'emails', 'coupons']
+		reg =['balance', 'campaign', 'pdays', 'previous','calls', 'emails', 'coupons']
 	if target == []:
 		target = ['target']
 
@@ -50,9 +51,13 @@ def run_mob(request):
 		#code
 		model.seg_lvl_data['Size'] = pd.cut(model.seg_lvl_data['target'], 4, labels=[28,31,34,37])
 		exp_plots = []
+		print (model.seg_lvl_data.columns)
 		for X_var, Y_var in zip(model.beta,model.var_mean):
-			plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff(model.seg_lvl_data, X_var, Y_var, "nodes", "age", 'Size'))
-			exp_plots.append((Y_var,plot_html))
+			for color in model.reg:
+				plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff
+					(model.seg_lvl_data, X_var, Y_var, "nodes", color, 'Size'))
+				exp_plots.append((Y_var, color, plot_html))
+		#print (exp_plots)
 		# adding plots to the dictionary
 		template_input["exp_plots"] = exp_plots
 		#adding overall impact table
@@ -60,8 +65,8 @@ def run_mob(request):
 			"table table-hover", header=False, index=False)
 		
 		print ('***************** temp input *****************')
-		# print (template_input)
-		print (target, depth, min_size, trn_split)
+		#print (template_input)
+		#print (target, depth, min_size, trn_split)
 	return render(request, "launch/index.html", template_input)
 
 # Not in use

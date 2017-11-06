@@ -175,13 +175,13 @@
 	<div id ="loading"> </div>
 	<div id="content" class = "container well well-sm" style=" width: 95%; padding: 2%; margin: auto; margin-left: 0% ">
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#mob">Model Summary</a></li>
+			<li class="{% if active_tab == 'summary' %}active{% endif %}"><a data-toggle="tab" href="#mob">Model Summary</a></li>
 			<li><a data-toggle="tab" href="#viz">Data Discovery</a></li>
-			<li><a data-toggle="tab" href="#conc">Model Effectiveness</a></li>
+			<li class="{% if active_tab == 'exp_vs_eff' %}active{% endif %}" ><a data-toggle="tab" href="#conc">Model Effectiveness</a></li>
 		</ul>
 		<div class="tab-content">
 			<!-- Model Summary -->
-			<div id="mob" class="tab-pane fade in active">
+			<div id="mob" class="tab-pane fade {% if active_tab == 'summary' %}in active{% endif %}">
 				<br>
 				<br>
 				<legend class="text-center"><h3>MOB Tree</h3></legend>	
@@ -199,23 +199,38 @@
 
 			<!-- Data Discovery -->
 			<div id="viz" class="tab-pane fade">
-				<p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+				<br>
+				<br>
+				<div class="col-sm-3">
+					<ul class="nav nav-pills nav-stacked">
+						<li class="active"><a href="#">Correlation</a></li>
+						<li><a href="#">Line Plot</a></li>
+						<li><a href="#">Bar Plot</a></li>
+					</ul>
+				</div>
+				<div class="col-sm-9">
+					<img src= "{% static "media/correlation.png" %}" style="max-width: 100%; max-height: auto;">
+				</div>
 			</div>
 
 
+
+
+
 			<!-- Model Effectiveness -->
-			<div id="conc" class="tab-pane fade">
+			<div id="conc" class="tab-pane fade {% if active_tab == 'exp_vs_eff' %}in active{% endif %}">
 				<br>
 				<br>
 				<legend class="text-center"><h3>Exposure  VS Effectiveness</h3></legend>
+				<form action = "" method = "get">
 				<div class="col-sm-3" style="border: solid #d9dbdd; border-width: 1px; padding: 2%;">
 					<div class="container" style="margin: auto; width: 90%;">
 						<div class="form-group row">
 							<label for="graph_variable" class="col-2 col-form-label">Graph Variable</label>
 							<div class="col-10">
-							<select id="graph_variable" class="div-toggle selectpicker form-control" data-target=".plot_content" data-live-search="true">
+							<select name="graph_variable" id="graph_variable" class="selectpicker form-control" data-live-search="true">
 								{% for var in reg %}
-									<option value="exp_graph{{var}}" data-show=.exp_graph{{var}}>{{var}}</option>
+									<option value="{{var}}" {% if var == exp_graph_var.0 %} selected = "selected" {% endif %}>{{var}}</option>
 								{% endfor %}
 							</select>	
 							</div>
@@ -224,7 +239,7 @@
 						<div class="form-group row">
 							<label for="pivot_variable" class="col-2 col-form-label">Pivot Variable</label>
 							<div class="col-10">
-							<select id="pivot_variable" class="div-toggle selectpicker form-control" data-target=".plot_content" data-live-search="true">
+							<select name="pivot_variable" id="pivot_variable" class="selectpicker form-control" data-live-search="true">
 								<option value="nodes">nodes</option>
 							</select>	
 							</div>
@@ -233,41 +248,35 @@
 						<div class="form-group row">
 							<label for="color_variable" class="col-2 col-form-label">Color Variable</label>
 							<div class="col-10">
-							<select id="color_variable" class="div-toggle selectpicker form-control" data-target=".plot_content" data-live-search="true">
+							<select name="color_variable" id="color_variable" class="selectpicker form-control" data-live-search="true">
 								{% for var in reg %}
-									<option value="exp_color{{var}}" data-show=.exp_color{{var}}>{{var}}</option>
+									<option value="{{var}}" {% if var == exp_color_var.0 %} selected = "selected" {% endif %}>{{var}}</option>
 								{% endfor %}
 							</select>	
 							</div>
 						</div>
 
 						<div class="form-group row">
-							<label for="graph_variable" class="col-2 col-form-label">Size Variable</label>
+							<label for="size_variable" class="col-2 col-form-label">Size Variable</label>
 							<div class="col-10">
-							<select id="size_variable" class="div-toggle selectpicker form-control" data-target=".plot_content" data-live-search="true">
+							<select name="size_variable" id="size_variable" class="selectpicker form-control" data-live-search="true">
 									<option value="size" >target</option>
 							</select>	
 							</div>
 						</div>
-					</div>
-				</div>
-				<div class="col-sm-9">
-					<div class="container" style="margin: auto; width: 90%">
-						<div class="plot_content">
-						{% for exp_plot in exp_plots %}
-							<div class="exp_graph{{exp_plot.0}} exp_color{{exp_plot.1}} hide">
-								{% autoescape off %}{{exp_plot.2}}{% endautoescape %}
-							</div>
-						{% endfor %}
+						<div class="form-group row text-right">
+							<input class="btn btn-primary" type = "Submit" value = "Run"/>
 						</div>
 					</div>
 				</div>
+				</form>
+				<div class="col-sm-9">
+					<div class="container" style="margin: auto; width: 90%">
+						{% autoescape off %}{{exp_plot}}{% endautoescape %}
+					</div>
+				</div>
 			</div>
-
-
-
-
-	</div>
+		</div>
 	</div>	
 </div>
 </body>

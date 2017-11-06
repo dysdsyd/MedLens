@@ -18,6 +18,9 @@ variables = data.columns.values
 
 import model_utils, plotly_viz
 
+model = model_utils.MOB(data_path, full_data_path,id_key='ID', ver_string='default')
+
+
 def run_mob(request):
 	seg = request.GET.getlist('seg')
 	reg = request.GET.getlist('reg')
@@ -25,10 +28,37 @@ def run_mob(request):
 	depth = request.GET.get('depth')
 	min_size = request.GET.get('min_size')
 	trn_split = request.GET.get('trn_split')
+	exp_graph_var = request.GET.getlist('graph_variable')
+	exp_color_var = request.GET.getlist('color_variable')
 	context = RequestContext(request)
+	template_input = {"variables":variables}
+
+	# EDA Plots
+	plotly_viz.correlation_plot(data)
+
+
+	# Exp Vs Eff plots
+	print ('----------------------- Debugging -----------------------------------')
+	print (exp_graph_var, exp_color_var)
+	if exp_graph_var != [] and exp_color_var != []:
+		model.seg_lvl_data['Size'] = pd.cut(model.seg_lvl_data['target'], 4, labels=[28,31,34,37])
+		plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff
+			(model.seg_lvl_data, str('beta_'+str(exp_graph_var[0])), str(exp_graph_var[0]),
+			 "nodes", str(exp_color_var[0]), 'Size'))
+		template_input = {"variables":variables, "seg":model.part, "reg":model.reg, "target":model.target, 
+					"depth":model.depth, "min_size":model.min_size, "trn_split":model.trn_split,
+					"exp_plot":plot_html, 'active_tab':'exp_vs_eff', 
+					"exp_graph_var":exp_graph_var, "exp_color_var": exp_color_var}
+		#code
+		#adding overall impact table
+		template_input["overall_impact"] = model.overall_impact.to_html( justify='center', classes=
+			"table table-hover", header=False, index=False)
+		print (template_input)
+		return render(request, "launch/index.html", template_input)
+
+
 
 	# ver_string = request.GET.get('ver_string')
-	template_input = {"variables":variables}
 	# Setting Default Variables (Specific to bank market)
 	if seg == []:
 		seg = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'day','age']
@@ -38,28 +68,18 @@ def run_mob(request):
 		target = ['target']
 
 	if depth and min_size and trn_split !=None:
-		model = model_utils.MOB(data_path, full_data_path,id_key='ID', depth=int(depth), min_size=int(min_size), trn_split=float(trn_split), 
-			ver_string='default')
+		model.depth = int(depth)
+		model.min_size = int(min_size)
+		model.trn_split = float(trn_split)
 		model.show_formula()
-		print (model.depth, model.min_size, model.trn_split, model.ver_string)
 		print ('***************** Fittting Model ****************')
 		#model.mob_fit()
 		print ('***************** Creating Summary *****************')
 		model.create_summary()
 		template_input = {"variables":variables, "seg":model.part, "reg":model.reg, "target":model.target, 
-					"depth":model.depth, "min_size":model.min_size, "trn_split":model.trn_split}
+					"depth":model.depth, "min_size":model.min_size, "trn_split":model.trn_split, 
+					'active_tab':'summary'}
 		#code
-		model.seg_lvl_data['Size'] = pd.cut(model.seg_lvl_data['target'], 4, labels=[28,31,34,37])
-		exp_plots = []
-		print (model.seg_lvl_data.columns)
-		for X_var, Y_var in zip(model.beta,model.var_mean):
-			for color in model.reg:
-				plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff
-					(model.seg_lvl_data, X_var, Y_var, "nodes", color, 'Size'))
-				exp_plots.append((Y_var, color, plot_html))
-		#print (exp_plots)
-		# adding plots to the dictionary
-		template_input["exp_plots"] = exp_plots
 		#adding overall impact table
 		template_input["overall_impact"] = model.overall_impact.to_html( justify='center', classes=
 			"table table-hover", header=False, index=False)

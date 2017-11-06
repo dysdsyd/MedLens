@@ -137,10 +137,3 @@ class MOB(object):
 
 
 
-							<div class="exp_graph{{exp_plot.0}} exp_color{{exp_plot.1}} hide">
-								{% autoescape off %}{{exp_plot.}}{% endautoescape %}
-							</div>
-													{% for exp_plot in exp_plots %}
-							<h2>New Plot</h2>
-							{{exp_plot}}
-						{% endfor %}

@@ -4,8 +4,8 @@ from plotly.offline import download_plotlyjs, init_notebook_mode, plot, iplot
 import plotly.graph_objs as go
 from plotly import tools
 from plotly.offline.offline import _plot_html
-#import seaborn as sns
-#import matplotlib.pyplot as plt
+# import seaborn as sns
+# import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 
@@ -207,6 +207,33 @@ def exp_vs_eff (pivot, X_var, Y_var, pivot_on, color_on, size):
 	return (_plot_html(fig, False, "", True, '100%', 525))
 
 
+def gen_multi_variate_lines(data, X_var, Y_var, pivot_on,title):
+    x_template = dict(title=X_var,showticklabels=True,showgrid=True,showline=True,zeroline=False, #,tickangle=0
+                  titlefont=dict(
+                      #family='Arial, sans-serif',
+                      size=14,
+                      #color='black',
+                  ))
+    y_template = dict(title=Y_var,showticklabels=True,showgrid=True,showline=True,zeroline=True,zerolinewidth=1,
+                      titlefont=dict(
+                          #family='Arial, sans-serif',
+                          size=14,
+                          #color='black',
+                      ))
+    layout = go.Layout(width=1200, height=600, 
+                       xaxis=x_template,
+                       yaxis=y_template,
+                       title=title)
+    trace = []
+    segments = data.reset_index()[pivot_on].unique()
+    for segment in segments:
+        temp = data[segment].reset_index()
+        temp[X_var] = temp[X_var].astype(str)
+        trace.append(go.Scatter(x=temp[X_var],y=temp[Y_var], mode='lines+markers', name=str(segment)))
+    fig = dict(data=trace, layout=layout)
+    #iplot(fig)
+    return (_plot_html(fig, False, "", True, '100%', 525))
+
 
 # def joint_plot(X, Y, u_perc_x, u_perc_y, train_df):
 # 	ulimit = np.percentile(train_df[Y].values, u_perc_y)
@@ -233,4 +260,17 @@ def exp_vs_eff (pivot, X_var, Y_var, pivot_on, color_on, size):
 # 	plt.xlabel(X, fontsize=12)
 # 	plt.title(Y+" VS "+X, fontsize=15)
 # 	plt.show()
-# 	return X_IDS, Y_IDS
+# 	return X_IDS, 
+
+
+# def correlation_plot(data):
+# 	numerics = ['int16', 'int32', 'int64', 'float16', 'float32', 'float64']
+# 	temp = data.select_dtypes(include=numerics)
+# 	corrmat = temp.corr()
+# 	f, ax = plt.subplots(figsize=(80, 80))
+# 	# Draw the heatmap using seaborn
+# 	mask = np.zeros_like(corrmat, dtype=np.bool)
+# 	mask[np.triu_indices_from(mask)] = True 
+# 	sns.heatmap(corrmat, mask=mask, vmax=1., square=True, cmap="YlGnBu", annot=True)
+# 	plt.title("Correlation Map", fontsize=40)
+# 	plt.savefig("launch/static/media/correlation.jpg", transparent=True)

@@ -34,7 +34,7 @@ def run_mob(request):
 	template_input = {"variables":variables}
 
 	# EDA Plots
-	plotly_viz.correlation_plot(data)
+	# plotly_viz.correlation_plot(data)
 
 
 	# Exp Vs Eff plots

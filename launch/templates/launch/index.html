@@ -104,7 +104,19 @@
 	<!-- Setting Area-->
 	<div class="col-sm-3">
 	<div class = "container well well-sm" style=" width: 90%; padding: 14%; margin: auto; margin-right: 0%; ">
-		<legend class="text-center"><h3>Model Universe Setting</h3></legend>
+		<legend class="text-center"><h3>Model Universe</h3></legend>
+		<form class="col-sm-12" action="" method="get">
+				<div class="form-group row">
+					<label for="file" class="col-2 col-form-label">Choose File</label>
+					<div class="col-10">
+					<select name = "file" id = "file" class="selectpicker form-control" data-live-search="true" title = " " onchange="this.form.submit()">
+						{% for fl in files %}
+							<option value="{{fl}}" {% if fl in choosen_file %} selected = "selected" {% endif %}>{{fl}}</option>
+						{% endfor %}
+					</select>
+					</div>
+				</div>
+		</form>
 		<form class="col-sm-12" action = "" method = "get">
 			<fieldset>
 				<div class="form-group row">
@@ -112,7 +124,7 @@
 					<div class="col-10">
 					<select name = "seg" id = "seg" class="selectpicker form-control"  multiple data-live-search="true" title = " ">
 						{% for var in variables %}
-							<option value="{{var}}">{{var}}</option>
+							<option value="{{var}}" {% if var in seg %} selected = "selected" {% endif %}>{{var}}</option>
 						{% endfor %}
 					</select>
 					</div>
@@ -122,7 +134,7 @@
 					<div class="col-10">
 					<select name = "reg" id = "reg" class="selectpicker form-control" multiple data-live-search="true" title = " ">
 						{% for var in variables %}
-							<option value="{{var}}">{{var}}</option>
+							<option value="{{var}}" {% if var in reg %} selected = "selected" {% endif %}>{{var}}</option>
 						{% endfor %}
 					</select>
 					</div>
@@ -130,8 +142,10 @@
 				<div class="form-group row">
 					<label for="target" class="col-2 col-form-label">Target Variable</label>
 					<div class="col-10">
-					<select name = "target" id = "target" class="selectpicker form-control" multiple data-live-search="true" title = " " placeholder="Target Varible">
-						<option value="target">target</option>
+					<select name = "target" id = "target" class="selectpicker form-control" data-live-search="true" title = " " placeholder="Target Varible">
+						{% for var in variables %}
+							<option value="{{var}}" {% if var in target %} selected = "selected" {% endif %}>{{var}}</option>
+						{% endfor %}
 					</select>
 					</div>
 				</div>
@@ -141,19 +155,19 @@
 				<div class="form-group row">
 					<label for="depth" class="col-2 col-form-label">Depth</label>
 					<div class="col-10" >
-					<input class="form-control" name = "depth" id = "depth" type="number" step="any" value = "8"/>
+					<input class="form-control" name = "depth" id = "depth" type="number" step="any" value = "{{depth}}"/>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="min_size" class="col-2 col-form-label">Min Size</label>
 					<div class="col-10"  >
-					<input class="form-control" name = "min_size" id = "min_size" type="number" step="any" value = "200"/>
+					<input class="form-control" name = "min_size" id = "min_size" type="number" step="any" value = "{{min_size}}"/>
 					</div>
 				</div>
 				<div class="form-group row">
 					<label for="trn_split" class="col-2 col-form-label">Train Split</label>
 					<div class="col-10" >
-					<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "0.8"/>
+					<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "{{trn_split}}"/>
 					</div>	
 				</div>
 				<!--div class="form-group row">
@@ -163,7 +177,7 @@
 					</div>
 				</div-->
 				<div class="form-group row text-right">
-					<input class="btn btn-primary btn-lg" type = "Submit" value = "Run" onclick="loading();" />
+					<input class="btn btn-primary btn-lg" type = "Submit" value = "Update" onclick="loading();" />
 				</div>
 			</fieldset>
 		</form>
@@ -172,14 +186,72 @@
 
 	<!-- Output Area -->
 	<div class="col-sm-9">
-	<div id ="loading"> </div>
+	<div id ="loading" class = "container well well-sm"> </div>
 	<div id="content" class = "container well well-sm" style=" width: 95%; padding: 2%; margin: auto; margin-left: 0% ">
 		<ul class="nav nav-tabs">
-			<li class="{% if active_tab == 'summary' %}active{% endif %}"><a data-toggle="tab" href="#mob">Model Summary</a></li>
+			<li><a data-toggle="tab" href="#datup">Data Upload</a></li>
+
+			<li><a data-toggle="tab" href="#dqchk">DQ Checks</a></li>
+
 			<li><a data-toggle="tab" href="#viz">Data Discovery</a></li>
+
+			<li class="{% if active_tab == 'summary' %}active{% endif %}"><a data-toggle="tab" href="#mob">Model Exploration</a></li>
+
 			<li class="{% if active_tab == 'exp_vs_eff' %}active{% endif %}" ><a data-toggle="tab" href="#conc">Model Effectiveness</a></li>
+
+			<li><a data-toggle="tab" href="#">Model Validation</a></li>
 		</ul>
 		<div class="tab-content">
+
+
+			<!-- Data  Upload -->
+			<div id="datup" class="tab-pane fade">
+			<br>
+			<br>
+				{% block content %}
+				  <form method="post" enctype="multipart/form-data">
+				    {% csrf_token %}
+				    <input type="file" name="myfile">
+				    <button type="submit">Upload</button>
+				  </form>
+
+				  {% if uploaded_file_url %}
+				    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
+				  {% endif %}
+
+				{% endblock %}
+			</div>
+
+
+
+
+			<!-- DQ Check -->
+			<div id="dqchk" class="tab-pane fade">
+				<br>
+				<br>
+				<div class="col-sm-12">
+				<legend class="text-center"><h3>Discrete Variables</h3></legend>
+				{% for var in dq_check.0 %}
+					<div class="col-sm-3">
+						<legend class="text-center"><h4>{{var.0}}</h4></legend>
+						{% autoescape off %}{{var.1}}{% endautoescape %}
+					</div>
+				{% endfor %}
+				</div>
+				<br>
+				<br>
+				<br>
+				<div class="col-sm-12">
+				<legend class="text-center"><h3>Continuous Variables</h3></legend>
+				{% for var in dq_check.1 %}
+					<div class="col-sm-3">
+						<legend class="text-center"><h4>{{var.0}}</h4></legend>
+						{% autoescape off %}{{var.1}}{% endautoescape %}
+					</div>
+				{% endfor %}
+				</div>	
+			</div>
+
 			<!-- Model Summary -->
 			<div id="mob" class="tab-pane fade {% if active_tab == 'summary' %}in active{% endif %}">
 				<br>
@@ -198,19 +270,125 @@
 
 
 			<!-- Data Discovery -->
-			<div id="viz" class="tab-pane fade">
-				<br>
-				<br>
+			<div id="viz" class="tab-pane fade {% if active_tab == 'line_plot' or active_tab == 'bar_plot' %}in active{% endif %}">
+			<br>
 				<div class="col-sm-3">
-					<ul class="nav nav-pills nav-stacked">
-						<li class="active"><a href="#">Correlation</a></li>
-						<li><a href="#">Line Plot</a></li>
-						<li><a href="#">Bar Plot</a></li>
+					<ul class="nav nav-pills">
+						<li><a href="#corr" data-toggle="tab">Correlation</a></li>
+						<li class="{% if active_tab == 'line_plot' %}active{% endif %}"><a href="#line" data-toggle="tab">Line Plot</a></li>
+						<li class="{% if active_tab == 'bar_plot' %}active{% endif %}"><a href="#bar" data-toggle="tab">Bar Plot</a></li>
 					</ul>
 				</div>
-				<div class="col-sm-9">
-					<img src= "{% static "media/correlation.png" %}" style="max-width: 100%; max-height: auto;">
-				</div>
+				<div class="tab-content">
+
+
+					<!-- Correlation plot -->
+					<div id="corr" class="col-sm-12 tab-pane fade" >
+						<img src= "{% static "media/correlation.png" %}" style="max-width: 100%; max-height: auto;">
+					</div>
+
+
+					<!-- Line Plot -->
+					<div id="line" class="col-sm-12 tab-pane fade {% if active_tab == 'line_plot' %}in active{% endif %}">
+						<legend class="text-center"><h3>Line Plot</h3></legend>
+						<br>
+						<br>
+						<form action = "" method = "get">
+						<div class="col-sm-3" style="border: solid #d9dbdd; border-width: 1px; padding: 2%;">
+							<div class="container" style="margin: auto; width: 90%;">
+								<div class="form-group row">
+									<label for="line_X" class="col-2 col-form-label">X Variable</label>
+									<div class="col-10">
+									<select name="line_X" id="line_X" class="selectpicker form-control" data-live-search="true">
+										{% for var in reg %}
+											<option value="{{var}}" {% if var == line_X.0 %} selected = "selected" {% endif %}>{{var}}</option>
+										{% endfor %}
+									</select>	
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="line_Y" class="col-2 col-form-label">Y Variable</label>
+									<div class="col-10">
+									<select name="line_Y" id="line_Y" class="selectpicker form-control" data-live-search="true">
+										{% for var in target %}
+											<option value="{{var}}" {% if var == line_Y.0 %} selected = "selected" {% endif %}>{{var}}</option>
+										{% endfor %}
+									</select>	
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="line_pivot" class="col-2 col-form-label">Pivot</label>
+									<div class="col-10">
+									<select name="line_pivot" id="line_pivot" class="selectpicker form-control" data-live-search="true">
+										{% for var in seg %}
+											<option value="{{var}}" {% if var == line_pivot.0 %} selected = "selected" {% endif %}>{{var}}</option>
+										{% endfor %}
+									</select>	
+									</div>
+								</div>
+
+								
+								<div class="form-group row text-right">
+									<input class="btn btn-primary" type = "Submit" value = "Run"/>
+								</div>
+							</div>
+						</div>
+						</form>
+						<div class="col-sm-9">
+							<div class="container" style="margin: auto; width: 90%">
+								{% autoescape off %}{{line_plot}}{% endautoescape %}
+							</div>
+						</div>
+					</div>
+
+
+
+					<!-- Bar Plot-->
+					<div id="bar" class="col-sm-12 tab-pane fade {% if active_tab == 'bar_plot' %}in active{% endif %}">
+						<legend class="text-center"><h3>Bar Plot</h3></legend>
+						<br>
+						<br>
+						<form action = "" method = "get">
+						<div class="col-sm-3" style="border: solid #d9dbdd; border-width: 1px; padding: 2%;">
+							<div class="container" style="margin: auto; width: 90%;">
+								<div class="form-group row">
+									<label for="bar_X" class="col-2 col-form-label">X Variable</label>
+									<div class="col-10">
+									<select name="bar_X" id="bar_X" class="selectpicker form-control" data-live-search="true">
+										{% for var in variables %}
+											<option value="{{var}}" {% if var == bar_X.0 %} selected = "selected" {% endif %}>{{var}}</option>
+										{% endfor %}
+									</select>	
+									</div>
+								</div>
+
+								<div class="form-group row">
+									<label for="bar_Y" class="col-2 col-form-label">Y Variable</label>
+									<div class="col-10">
+									<select name="bar_Y" id="bar_Y" class="selectpicker form-control" data-live-search="true">
+										{% for var in target %}
+											<option value="{{var}}" {% if var == bar_Y.0 %} selected = "selected" {% endif %}>{{var}}</option>
+										{% endfor %}
+									</select>	
+									</div>
+								</div>
+
+								
+								<div class="form-group row text-right">
+									<input class="btn btn-primary" type = "Submit" value = "Run"/>
+								</div>
+							</div>
+						</div>
+						</form>
+						<div class="col-sm-9">
+							<div class="container" style="margin: auto; width: 90%">
+								{% autoescape off %}{{bar_plot}}{% endautoescape %}
+							</div>
+						</div>
+					</div>
+				</div>	
 			</div>
 
 
@@ -260,7 +438,7 @@
 							<label for="size_variable" class="col-2 col-form-label">Size Variable</label>
 							<div class="col-10">
 							<select name="size_variable" id="size_variable" class="selectpicker form-control" data-live-search="true">
-									<option value="size" >target</option>
+									<option value="size" >{{target.0}}</option>
 							</select>	
 							</div>
 						</div>
@@ -276,6 +454,10 @@
 					</div>
 				</div>
 			</div>
+
+
+
+
 		</div>
 	</div>	
 </div>

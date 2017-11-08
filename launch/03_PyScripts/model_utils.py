@@ -1,8 +1,8 @@
-# import rpy2
-# from rpy2.robjects.packages import STAP
-# from rpy2.robjects import r
-# from rpy2.robjects.packages import importr
-# import rpy2.robjects.packages as rpackages
+import rpy2
+from rpy2.robjects.packages import STAP
+from rpy2.robjects import r
+from rpy2.robjects.packages import importr
+import rpy2.robjects.packages as rpackages
 import pandas as pd
 import numpy as np
 import os
@@ -19,9 +19,9 @@ class MOB(object):
 		self.min_size = min_size
 		self.trn_split = trn_split
 		self.ver_string = ver_string
-		self.reg =['balance', 'campaign', 'pdays', 'previous','calls', 'emails']
-		self.part =['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'day','age']
-		self.target = ['target']
+		self.reg =[]
+		self.part =[]
+		self.target = []
 		self.formula = None
 		self.summary = None
 		self.impact_Q4 = False

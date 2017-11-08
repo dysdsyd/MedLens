@@ -90,7 +90,9 @@ def gen_multi_variate_bar(data, X_var, Y_var, title):
 	                  ))
 	layout = go.Layout(width=600, height=600, 
 	                   xaxis=x_template,
-	                   yaxis=y_template)
+	                   yaxis=y_template,
+	                   paper_bgcolor='rgba(0,0,0,0)',
+	                   plot_bgcolor='rgba(0,0,0,0)')
 
 	fig=tools.make_subplots(rows=1,cols=1)
 	trace = go.Bar(x=data[X_var],y=data[Y_var],width = .8, marker=dict(color='rgb(158,202,225)',line=dict(color='rgb(8,48,107)',width=1.5,)),
@@ -100,9 +102,13 @@ def gen_multi_variate_bar(data, X_var, Y_var, title):
 	fig['layout']['yaxis1'].update(y_template)
 
 	fig['layout'].update(title=title,
-	                     titlefont=dict(color='black'),width=600, height=600, showlegend=False)
+	                     titlefont=dict(color='black'),width=600, height=600, showlegend=False,
+	                     paper_bgcolor='rgba(0,0,0,0)',
+	                     plot_bgcolor='rgba(0,0,0,0)')
 	#fig = go.Figure(data=data, layout=layout)
-	iplot(fig, filename='multi_variate_bar')
+	#iplot(fig, filename='multi_variate_bar')
+	return (_plot_html(fig, False, "", True, '100%', 525))
+
 
 
 
@@ -220,10 +226,12 @@ def gen_multi_variate_lines(data, X_var, Y_var, pivot_on,title):
                           size=14,
                           #color='black',
                       ))
-    layout = go.Layout(width=1200, height=600, 
+    layout = go.Layout(width=800, height=600, 
                        xaxis=x_template,
                        yaxis=y_template,
-                       title=title)
+                       title=title,
+                       paper_bgcolor='rgba(0,0,0,0)',
+	                   plot_bgcolor='rgba(0,0,0,0)')
     trace = []
     segments = data.reset_index()[pivot_on].unique()
     for segment in segments:

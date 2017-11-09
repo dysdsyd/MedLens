@@ -1,4 +1,6 @@
-# README #
+# Launch Analytics #
+Launch analytics is a comprehensive offering that allows the launch team to bend their uptake curve by providing sophisticated and actionable insights in a timely manner and drive brand growth by changing the focus from reactive to proactive analytics.
+At its core, it has an analytics layer which provides flexibility to perform customer level analysis to answer business questions, identify performance drivers, and guide holistic decision making.
 
 
 ## Instructions

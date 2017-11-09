@@ -186,7 +186,7 @@ def exp_vs_eff (pivot, X_var, Y_var, pivot_on, color_on, size):
 	layout = go.Layout(width=600, height=600, 
 	                   xaxis=x_template,
 	                   yaxis=y_template,
-	                   title='Effectiveness VS Exposure',
+	                   #title='Effectiveness VS Exposure',
 	                   titlefont=dict(color='black'),
 	                   paper_bgcolor='rgba(0,0,0,0)',
 	                   plot_bgcolor='rgba(0,0,0,0)'

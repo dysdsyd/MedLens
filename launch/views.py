@@ -64,6 +64,9 @@ def run_mob(request):
 	# Create DQ Check as it gets file name
 	template_input["dq_check"] = DQ_CHECK(data)
 
+	print (file, seg, reg, target, depth, min_size, trn_split, exp_graph_var, exp_color_var,
+		line_X, line_Y, line_pivot, bar_X, bar_Y)
+
 
 	# Choose Data
 	if file != []:
@@ -85,7 +88,22 @@ def run_mob(request):
 		template_input["seg"] = model.part
 		template_input["reg"] = model.reg
 		template_input["target"] = model.target
+		template_input["active_tab"] = "dq_check"
 		return render(request, "launch/index.html", template_input)
+
+	# Universe Setting
+	if seg != [] and reg != [] and target != []:
+		model.part = seg
+		model.reg = reg
+		model.target = target
+		template_input["variables"]=data.columns.values
+		template_input["seg"] = model.part
+		template_input["reg"] = model.reg
+		template_input["target"] = model.target
+		template_input["active_tab"] = "line_plot"
+		return render(request, "launch/index.html", template_input)
+
+
 
 	# Data Upload
 	if request.method == 'POST' and request.FILES['myfile']:
@@ -96,10 +114,11 @@ def run_mob(request):
 		uploaded_file_url = fs.url(filename)
 		template_input["uploaded_file_url"] = uploaded_file_url
 		template_input['files'] = os.listdir("launch/01_Data")
+		template_input["active_tab"] = "data_upload"
 		return render(request, "launch/index.html", template_input)
 	
 	# EDA Plots
-	plotly_viz.correlation_plot(data)
+	#plotly_viz.correlation_plot(data)
 
 	#Line Plots
 	if line_X !=[] and line_Y != [] and line_pivot!=[]:
@@ -116,7 +135,7 @@ def run_mob(request):
 		template_input["line_plot"] = plot_html
 		template_input["line_X"] = line_X
 		template_input["line_Y"] = line_Y
-		template_input["pivot_on"] = line_pivot
+		template_input["line_pivot"] = line_pivot
 		template_input["active_tab"] = "line_plot"
 		#print (template_input)
 		return render(request, "launch/index.html", template_input)
@@ -144,6 +163,7 @@ def run_mob(request):
 	print ('----------------------- Debugging -----------------------------------')
 	print (exp_graph_var, exp_color_var)
 	if exp_graph_var != [] and exp_color_var != []:
+		model.create_summary()
 		model.seg_lvl_data['Size'] = pd.cut(model.seg_lvl_data[model.target[0]], 4, labels=[28,31,34,37])
 		plot_html, plotdivid, width, height = (plotly_viz.exp_vs_eff
 			(model.seg_lvl_data, str('beta_'+str(exp_graph_var[0])), str(exp_graph_var[0]),
@@ -163,9 +183,6 @@ def run_mob(request):
 		model.depth = int(depth)
 		model.min_size = int(min_size)
 		model.trn_split = float(trn_split)
-		model.part = seg
-		model.reg = reg
-		model.target = target
 		print ("Depth = " ,model.depth)
 		model.show_formula()
 		print ('***************** Fittting Model ****************')
@@ -173,10 +190,7 @@ def run_mob(request):
 		model.mob_fit()
 		print ('***************** Creating Summary *****************')
 		model.create_summary()
-		template_input["variables"]=data.columns.values
-		template_input["seg"] = model.part
-		template_input["reg"] = model.reg
-		template_input["target"] = model.target
+
 		template_input["depth"] = str(model.depth)
 		template_input["min_size"] = str(model.min_size)
 		template_input["trn_split"] = str(model.trn_split)

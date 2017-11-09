@@ -40,7 +40,7 @@
 				width: 70%;
 				height: 100%;
 				z-index: 9999;
-			    background: url(https://codesquery.com/wp-content/uploads/2016/12/hourglass.svg)50% 50% no-repeat rgb(249,249,249);;
+			    background: url({% static "media/hourglass.svg" %})50% 50% no-repeat rgb(249,249,249);;
 			    cursor: wait;
 			    display: none;
 			}
@@ -150,8 +150,8 @@
 					</div>
 				</div>
 				
-
-
+				<!-- Transferred to Model Explration -->
+				<!--div>
 				<div class="form-group row">
 					<label for="depth" class="col-2 col-form-label">Depth</label>
 					<div class="col-10" >
@@ -170,11 +170,12 @@
 					<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "{{trn_split}}"/>
 					</div>	
 				</div>
-				<!--div class="form-group row">
+				<div class="form-group row">
 					<label for="ver_string" class="col-2 col-form-label">Version</label>
 					<div class="col-10" style="width: 75%;">
 					<input class="form-control" name = "ver_string" id = "ver_string" type="text" value = 'default'/>
 					</div>
+				</div>
 				</div-->
 				<div class="form-group row text-right">
 					<input class="btn btn-primary btn-lg" type = "Submit" value = "Update" onclick="loading();" />
@@ -189,9 +190,9 @@
 	<div id ="loading" class = "container well well-sm"> </div>
 	<div id="content" class = "container well well-sm" style=" width: 95%; padding: 2%; margin: auto; margin-left: 0% ">
 		<ul class="nav nav-tabs">
-			<li><a data-toggle="tab" href="#datup">Data Upload</a></li>
+			<li class="{% if active_tab == 'data_upload' %}active{% endif %}"><a data-toggle="tab" href="#datup">Data Upload</a></li>
 
-			<li><a data-toggle="tab" href="#dqchk">DQ Checks</a></li>
+			<li class="{% if active_tab == 'dq_check' %}active{% endif %}"><a data-toggle="tab" href="#dqchk">DQ Checks</a></li>
 
 			<li><a data-toggle="tab" href="#viz">Data Discovery</a></li>
 
@@ -205,7 +206,7 @@
 
 
 			<!-- Data  Upload -->
-			<div id="datup" class="tab-pane fade">
+			<div id="datup" class="tab-pane fade  {% if active_tab == 'data_upload' %}in active{% endif %}">
 			<br>
 			<br>
 				{% block content %}
@@ -226,7 +227,7 @@
 
 
 			<!-- DQ Check -->
-			<div id="dqchk" class="tab-pane fade">
+			<div id="dqchk" class="tab-pane fade  {% if active_tab == 'dq_check' %}in active{% endif %}">
 				<br>
 				<br>
 				<div class="col-sm-12">
@@ -256,13 +257,39 @@
 			<div id="mob" class="tab-pane fade {% if active_tab == 'summary' %}in active{% endif %}">
 				<br>
 				<br>
+				<!-- Hyperparamter Setting -->
+				<legend class="text-center"><h3>Model Setting</h3></legend>
+				<form class="col-sm-12" action = "" method = "get">
+					<div class="form-group col-sm-4">
+						<label for="depth" class="col-2 col-form-label">Depth</label>
+						<div class="col-10" >
+						<input class="form-control" name = "depth" id = "depth" type="number" step="any" value = "{{depth}}"/>
+						</div>
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="min_size" class="col-2 col-form-label">Min Size</label>
+						<div class="col-10"  >
+						<input class="form-control" name = "min_size" id = "min_size" type="number" step="any" value = "{{min_size}}"/>
+						</div>
+					</div>
+					<div class="form-group col-sm-4">
+						<label for="trn_split" class="col-2 col-form-label">Train Split</label>
+						<div class="col-10" >
+						<input class="form-control" name = "trn_split" id = "trn_split" type="number" step="any", value = "{{trn_split}}"/>
+						</div>	
+					</div>
+					<br>
+					<div class="form-group col-sm-12 text-left">
+						<input class="btn btn-primary btn-md" type = "Submit" value = "Run" onclick="loading();" />
+					</div>
+				</form>	
+
 				<legend class="text-center"><h3>MOB Tree</h3></legend>	
 				<img src= "{% static "media/box_tree.jpg" %}" style="max-width: 100%; max-height: auto;">
 				<br>
 				<br>
 				<legend class="text-center"><h3>Impact Table</h3></legend>
 				{% autoescape off %}{{overall_impact}}{% endautoescape %}
-				<!--table class="table table-hover" src="{% static "media/overall_impact.html" %}"></table-->
 				<br>
 				<br>
 				<legend class="text-center"><h3>Commentary</h3></legend>
@@ -274,9 +301,9 @@
 			<br>
 				<div class="col-sm-3">
 					<ul class="nav nav-pills">
-						<li><a href="#corr" data-toggle="tab">Correlation</a></li>
 						<li class="{% if active_tab == 'line_plot' %}active{% endif %}"><a href="#line" data-toggle="tab">Line Plot</a></li>
 						<li class="{% if active_tab == 'bar_plot' %}active{% endif %}"><a href="#bar" data-toggle="tab">Bar Plot</a></li>
+						<li><a href="#corr" data-toggle="tab">Correlation</a></li>
 					</ul>
 				</div>
 				<div class="tab-content">

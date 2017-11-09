@@ -200,7 +200,7 @@
 
 			<li class="{% if active_tab == 'exp_vs_eff' %}active{% endif %}" ><a data-toggle="tab" href="#conc">Model Effectiveness</a></li>
 
-			<li><a data-toggle="tab" href="#">Model Validation</a></li>
+			<li><a data-toggle="tab" href="#mval">Model Validation</a></li>
 		</ul>
 		<div class="tab-content">
 
@@ -213,13 +213,13 @@
 				  <form method="post" enctype="multipart/form-data">
 				    {% csrf_token %}
 				    <input type="file" name="myfile">
+				    <br>
 				    <button type="submit">Upload</button>
 				  </form>
 
 				  {% if uploaded_file_url %}
 				    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
 				  {% endif %}
-
 				{% endblock %}
 			</div>
 
@@ -482,6 +482,18 @@
 				</div>
 			</div>
 
+
+
+			<!-- Model Validation -->
+			<div id="mval" class="tab-pane fade">
+				<br>
+				<legend class="text-center"><h3>Training Data</h3></legend>	
+				<img src= "{% static "media/GLMtree_performance_plot_train.jpeg" %}" style="max-width: 100%; max-height: auto;">
+				<br>
+				<br>
+				<legend class="text-center"><h3>Testing Data</h3></legend>	
+				<img src= "{% static "media/GLMtree_performance_plot_test.jpeg" %}" style="max-width: 100%; max-height: auto;">
+			</div>
 
 
 

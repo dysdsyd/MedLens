@@ -66,6 +66,8 @@ mob_run <- function(file_path, file_path_all,formula, id_key='IMS_ID', train_spl
 }
 
 
+
+
 # Functions: Others ------------------------------------------------------------
 R2 <- function(y, y_hat){
   1 - (sum((y - y_hat)^2)/sum((y-mean(y))^2))
@@ -142,11 +144,31 @@ EvaluateModel <- function(model, dat, fs, idx, res) {
   # dat = dat_phte6m_flt
   res$train <- R2(dat[idx$train, get(fs$target)], predict(model, dat[idx$train,]))
   res$test <- R2(dat[idx$test, get(fs$target)], predict(model, dat[idx$test,]))
-  
   # mean(dat[, get(fs$target)])
   # mean(predict(model, dat))
+  LinearEvaluation(model, dat, fs, idx$train, res, prefix='_train')
+  LinearEvaluation(model, dat, fs, idx$test, res, prefix='_test')
+
   print(paste('R2 - Train:', round(res$train, 3), 'Test:', round(res$test, 3)))
   #res
+}
+
+LinearEvaluation <- function(model, dat, fs, index, res, prefix = '_train'){
+  y_actual <- dat[index, get(fs$target)]
+  y_pred <- predict(model, dat[index,])
+  residual.values <- y_actual - y_pred
+  jpeg(filename=paste0('launch/static/media/GLMtree_performance_plot',prefix,'.jpeg'),
+    width = 2000, height = 1000,res = 100,quality=600,pointsize = 18)
+  par(mfrow=c(2,2))
+  hist(residual.values, nclass=100, main = paste("Histogram of Residuals"))
+  plot(residual.values,xlab = "Observations",ylab = "Residuals",main = paste("Residual Plot"))
+  plot(y_pred,residual.values,ylab = "Residuals",xlab = "Fitted Values",
+    main = paste("Residuals v/s Fitted"))
+  plot(y_actual, y_pred,ylab = "Fitted Values",xlab = "Actual Values",
+    main = paste("Fitted v/s Actual"))
+  #mtext(paste0("Diagnostic plots for ",data.type), side = 3, line = -2, outer = TRUE)
+  dev.off()
+    
 }
 
 

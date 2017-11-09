@@ -77,6 +77,8 @@ def run_mob(request):
 		template_input["choosen_file"] = file
 		model.data_path = data_path
 		model.full_data_path = data_path
+		# EDA Plots
+		plotly_viz.correlation_plot(data)
 		# Setting Default Variables (Specific to bank market)
 		if file[0] == "bank_mkt.csv":
 			if seg == []:
@@ -117,8 +119,7 @@ def run_mob(request):
 		template_input["active_tab"] = "data_upload"
 		return render(request, "launch/index.html", template_input)
 	
-	# EDA Plots
-	#plotly_viz.correlation_plot(data)
+
 
 	#Line Plots
 	if line_X !=[] and line_Y != [] and line_pivot!=[]:

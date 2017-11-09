@@ -82,9 +82,9 @@ def run_mob(request):
 		# Setting Default Variables (Specific to bank market)
 		if file[0] == "bank_mkt.csv":
 			if seg == []:
-				model.part = ['job', 'marital', 'education', 'default', 'housing', 'loan', 'contact', 'month', 'poutcome', 'day','age']
+				model.part = ['job', 'marital', 'loan', 'month', 'age']
 			if reg == []:
-				model.reg =['balance', 'campaign', 'pdays', 'previous','calls', 'emails', 'coupons']
+				model.reg =['calls', 'emails', 'coupons']
 			if target == []:
 				model.target = ['target']
 		template_input["seg"] = model.part
@@ -124,7 +124,7 @@ def run_mob(request):
 	#Line Plots
 	if line_X !=[] and line_Y != [] and line_pivot!=[]:
 		df = data
-		if df[line_X[0]].nunique() <=4:
+		if df[line_X[0]].nunique() <=4 or df[line_X[0]].dtype != np.number:
 			df[line_X[0]+'_bins'] = df[line_X[0]]
 		else:
 			df[line_X[0]+'_bins'] = pd.cut(df[line_X[0]], 5)
@@ -144,7 +144,7 @@ def run_mob(request):
 	#Bar Plots
 	if bar_X !=[] and bar_Y != []:
 		df = data
-		if df[bar_X[0]].nunique() <=4 or df[bar_X[0]].dtype.name == 'category':
+		if df[bar_X[0]].nunique() <=4 or df[bar_X[0]].dtype != np.number:
 			df[bar_X[0]+'_bins'] = df[bar_X[0]]
 		else:
 			df[bar_X[0]+'_bins'] = pd.cut(df[bar_X[0]], 5)

@@ -11,7 +11,7 @@ sys.path.append('quest/src')
 #from pptToTopic import pptToTopic
 from textGenerator import file2Text
 from q_n_a_function import get_answer
-from keywordsExtr import helper
+from keywordsExtr import helper, pmcid_to_crawl
 import json
 # import pandas as pd
 # import numpy as np 
@@ -24,13 +24,13 @@ def run_query(request):
 	upload = request.GET.get('Upload Your Data')
 	explore = request.GET.get('Explore Your Data')
 	question_a = request.GET.get('question_a')
-	print (upload, explore)
-	template_input['give_answer'] = False 
+	# print (upload, explore)
+	template_input['give_answer_a'] = False 
 
 	# A2
 	if question_a != None:
 		print(str(question_a))
-		template_input['give_answer'] = True
+		template_input['give_answer_a'] = True
 		template_input['question_a'] = str(question_a)
 		template_input['answer_a'] = get_answer(template_input["passage_a"], template_input["question_a"])
 		return render(request, "quest/upload_analysis.html", template_input)
@@ -60,11 +60,25 @@ def run_query(request):
 def explore(request):
 	
 	research_area = request.GET.get("research")
+	question_b = request.GET.get('question_b')
 	template_input['research_area'] = research_area
+	template_input['give_answer_b'] = False 
+
+
+
 	if research_area != None:
 		keywords, size ,pmcid = helper(str(template_input['research_area']))
 		print(pmcid)
-		return render(request, 'quest/explore_b1.html',template_input)
+
+		if question_b!= None:
+			template_input['abstract'], template_input['passage_b'], template_input['article_title'] = pmcid_to_crawl(pmcid[0])
+			print(str(question_b))
+			template_input['give_answer_b'] = True
+			template_input['question_b'] = str(question_b)
+			template_input['answer_b'] = get_answer(template_input["passage_b"].decode('utf-8'), template_input["question_b"])
+			return render(request, "quest/explore_b2.html", template_input)
+
+		return render(request, 'quest/explore_b2.html',template_input)
 
 	#return render(request, 'quest/connect.html',{'visual_list':visual_list})
 	return render(request, "quest/explore_b1.html", template_input) 

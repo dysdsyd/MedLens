@@ -96,27 +96,25 @@
 </head>
 
 <body style="font-family: 'Saira Semi Condensed', sans-serif;">
-<header>
+<!--header>
 	<nav class="navbar">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<a class="navbar-brand">
-					<!--img src= "{% static "media/zslogo.jpg" %}" width = "150" height = "130" class="logo" alt=""-->
 					<h1 style="color: white; opacity: .5; font-size: 40px;"><strong>BOOGLE</strong></h1>
 				</a>
 			</div>
 		</div>
 	</nav>	
-</header>	
+</header-->	
 
 
 	<div class="container vertical-center">
 			<div id ="loading" class = "container"> </div>
 			<div id="content" class = "container" style="width: 80%;">
 				<form class = "col-sm-12 text-center" method = "get" action = "/explore">
-					<fieldset>
 					<div class = "form-group row text-center col-sm-12">
-						<label class="col-sm-12" for="research"><h2 style="font-size: 40px;">BOOGLE</h2></label>
+						<a href="/"><img src= "{% static "media/logo.png" %}" width = "100" height = "auto" alt="" style="margin: 1%"></a>
 						<input class="form-control" type="text" name="research" list="research">
 						<datalist id="research">
 							<option value="Diabetes">
@@ -127,9 +125,11 @@
 					<div class="form-group row text-center col-sm-12">
 						<input class="btn btn-primary btn-md" type="Submit" value="Search">
 					</div>
-					</fieldset>	
 				</form>
 			</div>	
 		</div>
+	<div class="container text-right" style="margin-right: 25%; margin-bottom: 15%;">
+		<img src= "{% static "media/docra.png" %}" alt="" class="pull-bottom" style="width: 20%; height: auto; position:absolute; bottom:0;">
+	</div>
 </body>
 </html>

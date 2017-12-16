@@ -30,6 +30,16 @@ def crawl(search_query):
             break
     return text
 
+def pmcid_to_display(pmc_id):
+    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id
+    response_page = requests.get(url)
+    tree = ET.fromstring(response_page.content)
+    article_title = ''.join(itertext(tree.findall(".//article-title")[0]))
+    return article_title
+
+
+
+
 def pmcid_to_crawl(pmc_id):
     #url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id
     urllib.request.urlretrieve("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id, "quest/data/"+pmc_id+".xml")
@@ -47,7 +57,7 @@ def entityToKeywords(searchTerm):
     to_search = search_query.split()[0]
     for entity in search_query.split()[1:]:
         to_search = to_search + "+AND+" + entity.lower().strip()
-    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+to_search+"+AND+free+fulltext[filter]&retmax=20"
+    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+to_search+"+AND+free+fulltext[filter]&retmax=5"
     response_page = requests.get(url)
     tree = ET.fromstring(response_page.content)
     df_kwd = pd.DataFrame(columns = ['file_name','kwd'])
@@ -93,5 +103,5 @@ def helper(searchTerm):
     c = {}
     for i,j in a:
         c[i] = list(b[b['kwd']==i].sort_values('score',ascending=False)['file_name'][:articlesForEachKeyword])
-    return a1,a2,pmcid
+    return a1, c
 #keywords,keywordsToArticles = helper('lupus')

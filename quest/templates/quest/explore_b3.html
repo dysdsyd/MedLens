@@ -96,45 +96,76 @@
 </head>
 
 <body style="font-family: 'Saira Semi Condensed', sans-serif;">
+<!--header>
+	<nav class="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<h1 style="color: white; opacity: .5; font-size: 40px;"><strong>BOOGLE</strong></h1>
+				</a>
+			</div>
+		</div>
+	</nav>	
+</header-->	
 
-	<!-- Output Area -->
-	<div class="container vertical-center" >
-		<div id ="loading" class = "container"> </div>
-		<div id="content" class = "container vertical-center" style="width: 80%;">
-			<form class = "col-sm-12" method = "get" action = "/explore"">
-				<fieldset>
-				<div class = "form-group row text-center">
-					<a href="/"><img src= "{% static "media/logo.png" %}" width = "100" height = "auto" alt="" style="margin: 1%"></a>
-					<textarea class="form-control" name = "question_b" id="question_b" rows="2" placeholder="{{question_b}}"></textarea>
-				</div>
-				
-				<div class="form-group row text-center col-sm-12">
-					<input class="btn btn-primary btn-md" type="Submit" value="Ask" name="Ask">
-				</div>
-				</fieldset>	
-				{% if give_answer_b %}
-				<hr>
-				<div class="form-group row text-center col-sm-12">
-					<h4>
-						{% autoescape off %}{{answer_b}}{% endautoescape %}
-					</h4>
-				</div>
+
+	<div class="container vertical-center">
+			<div id ="loading" class = "container"> </div>
+			<div id="content" class = "container" style="width: 80%;">
+				<form class = "col-sm-12 text-center" method = "get" action = "/explore_article">
+					<fieldset>
+					<div class = "form-group row text-center col-sm-12">
+						<a href="/"><img src= "{% static "media/logo.png" %}" width = "100" height = "auto" alt="" style="margin: 1%"></a>
+						<input class="form-control" type="text" name="key" list="research">
+						<datalist id="research">
+							<option value="Pain">
+							<option value="Blood Pressure">
+							<option value="Diabetes">
+							<option value="Heart Failure">
+							<option value="Quality of life">
+						</datalist>
+					</div>
+					<div class="form-group row text-center col-sm-12">
+						<input class="btn btn-primary btn-md" type="Submit" value="Search">
+					</div>
+					<div class="form-group row col-sm-12">
+						{% for keys in keywords %}
+							<input type="Submit" class="btn btn-default" value="{{keys}}" name="key" style="margin: 0.3%"/>
+						{% endfor %}
+					</div>
+					</fieldset>	
+				</form>
+				{% if pmcid_to_table %}
+					<table class="table">
+						<form class = "col-sm-12 text-center" method = "get" action = "/explore_question">
+						<thead>
+							<tr>
+								<th>PMCID</th>
+								<th>Title</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="Submit" class="btn btn-default" value="{{pmcid_to_table.0}}" name="PMCID" style="border:none; background:none"/></td>
+								<td>{{pmcid_title_to_table.0}}</td>
+							</tr>
+							<tr>
+								<td><input type="Submit" class="btn btn-default" value="{{pmcid_to_table.1}}" name="PMCID" style="border:none; background:none"/></td>
+								<td>{{pmcid_title_to_table.1}}</td>
+							</tr>
+							<tr>
+								<td><input type="Submit" class="btn btn-default" value="{{pmcid_to_table.2}}" name="PMCID" style="border:none; background:none"/></td>
+								<td>{{pmcid_title_to_table.2}}</td>
+							</tr>
+						</tbody>
+					</form>
+					</table>
 				{% endif %}
-				<hr>
-				<div class="form-group row text-center col-sm-12">
-					<h3>
-						{% autoescape off %}{{article_title}}{% endautoescape %}
-					</h3>
-					<p>
-						{% autoescape off %}{{abstract}}{% endautoescape %}
-					</p>
-				</div>
-			</form>
 
-		</div>	
-	</div>
+			</div>	
+		</div>
 	<div class="container text-right" style="margin-right: 25%; margin-bottom: 15%;">
-		<img src= "{% static "media/docyou.png" %}" alt="" class="pull-bottom" style="width: 20%; height: auto; position:absolute; bottom:0;">
+		<img src= "{% static "media/docra.png" %}" alt="" class="pull-bottom" style="width: 20%; height: auto; position:absolute; bottom:0;">
 	</div>
 </body>
 </html>

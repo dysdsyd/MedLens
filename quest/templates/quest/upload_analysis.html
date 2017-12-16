@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	{% load staticfiles %}
+	<title>Conv Grads</title>
+	<meta charset="utf-8">
+	<style>
+		header {
+		    min-height:50px;
+		    width:100%;
+		    position:relative;
+		    }		
+		h1 {
+		  font-size: 50px;
+		  color : #ffffff;
+		  top :60%;
+		  left:40%;
+		  position:absolute;
+		  float:left;
+		  opacity: 1;
+		   } 
+
+		.logo {
+		      display: inline-block;
+		      position:absolute;
+		      top:15%;
+		      left:3%;
+		      float:left;
+		      color: white;
+		     }
+		.boxed {
+		        border: 5px solid black ;
+		        width:500px;
+		        background-color:white;
+		        }
+		div#loading {
+				position: fixed;
+				margin-right: 1%;
+				width: 70%;
+				height: 100%;
+				z-index: 9999;
+			    background: url({% static "media/hourglass.svg" %})50% 50% no-repeat rgb(249,249,249);;
+			    cursor: wait;
+			    display: none;
+			}
+		.hide {
+ 			 display: none;
+
+ 		.center-block {  
+			  display: block;  
+			  margin-right: auto;  
+			  margin-left: auto;
+			  margin-top: auto;
+			  margin-bottom: auto;  
+			}  
+			}
+
+	</style>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Saira+Semi+Condensed" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- Latest compiled and minified CSS --> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.min.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css">
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+	<script type="text/javascript">
+		// <![CDATA[
+        function loading(){
+            $("#loading").show();
+            $("#content").hide();
+        }
+// ]]>
+	</script>
+	<script type="text/javascript">
+		$(document).on('change', '.div-toggle', function() {
+		  var target = $(this).data('target');
+		  var show = $("option:selected", this).data('show');
+		  $(target).children().addClass('hide');
+		  $(show).removeClass('hide');
+		});
+		$(document).ready(function(){
+			$('.div-toggle').trigger('change');
+		});       
+	</script>
+</head>
+
+<body style="font-family: 'Saira Semi Condensed', sans-serif;">
+<header>
+	<nav class="navbar">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a class="navbar-brand">
+					<!--img src= "{% static "media/zslogo.jpg" %}" width = "150" height = "130" class="logo" alt=""-->
+					<h1 style="color: white; opacity: .5; font-size: 40px;"><strong>BOOGLE</strong></h1>
+				</a>
+			</div>
+		</div>
+	</nav>	
+</header>	
+
+
+	<!-- Output Area -->
+	<div class="container vertical-center" >
+		<div id ="loading" class = "container"> </div>
+		<div id="content" class = "container vertical-center" style="width: 80%;">
+			<form class = "col-sm-12" method = "get" action = "">
+				<fieldset>
+				<div class = "form-group row text-center">
+					<label for="search"><h2 style="font-size: 40px;">BOOGLE</h2></label>
+					<textarea class="form-control" name = "question_a" id="question_a" rows="2" placeholder="{{question_a}}"></textarea>
+				</div>
+				
+				<div class="form-group row text-center col-sm-12">
+					<input class="btn btn-primary btn-md" type="Submit" value="Ask" name="Ask">
+				</div>
+				</fieldset>	
+				{% if give_answer %}
+				<hr>
+				<div class="form-group row text-center col-sm-12">
+					<h4>
+						{% autoescape off %}{{answer_a}}{% endautoescape %}
+					</h4>
+				</div>
+				{% endif %}
+			</form>
+		</div>	
+	</div>
+</body>
+</html>

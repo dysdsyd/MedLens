@@ -22,7 +22,7 @@ template_input = {}
 def run_query(request):
 	# Data Upload
 	upload = request.GET.get('Upload Your Data')
-	explore = request.GET.get('Explore Your Data')
+	explore = request.GET.get('Explore Libraries')
 	question_a = request.GET.get('question_a')
 	# print (upload, explore)
 	template_input['give_answer_a'] = False 
@@ -35,7 +35,7 @@ def run_query(request):
 		template_input['answer_a'] = get_answer(template_input["passage_a"], template_input["question_a"])
 		return render(request, "quest/upload_analysis.html", template_input)
 
-	template_input['question_a'] = "Ask Question"
+	template_input['question_a'] = "What do you want to know!!"
 	# A1
 	if request.method == 'POST' and request.FILES['myfile']:
 		myfile = request.FILES['myfile']
@@ -67,18 +67,31 @@ def explore(request):
 
 
 	if research_area != None:
+		template_input['give_answer_b'] = False
 		keywords, size ,pmcid = helper(str(template_input['research_area']))
 		print(pmcid)
 
-		if question_b!= None:
-			template_input['abstract'], template_input['passage_b'], template_input['article_title'] = pmcid_to_crawl(pmcid[0])
-			print(str(question_b))
-			template_input['give_answer_b'] = True
-			template_input['question_b'] = str(question_b)
-			template_input['answer_b'] = get_answer(template_input["passage_b"].decode('utf-8'), template_input["question_b"])
-			return render(request, "quest/explore_b2.html", template_input)
+		#def_d = []
+		# for key, value in zip(keywords, size):
+		# 	def_d.append({"text":key.decode("utf-8"), "count":value.astype(float)})
+		# for key, value in zip(keywords, size):
+		# 	def_d.append([key,value])
+		# #json_def_d = json.dumps(def_d)
+		#print("Reached")
+		#print(json_def_d)
+		#return render(request, 'quest/connect.html',{'visual_list':json_def_d})
+		# print(def_d)
+		# return render(request, 'quest/connect.html',{'nodes':def_d})
 
+		template_input['abstract'], template_input['passage_b'], template_input['article_title'] = pmcid_to_crawl(pmcid[0])
 		return render(request, 'quest/explore_b2.html',template_input)
+
+	if question_b!= None:
+		template_input['give_answer_b'] = True
+		template_input['question_b'] = str(question_b)
+		print (template_input['question_b'], template_input['passage_b'])
+		template_input['answer_b'] = get_answer(template_input["passage_b"], template_input["question_b"])
+		return render(request, "quest/explore_b2.html", template_input)
 
 	#return render(request, 'quest/connect.html',{'visual_list':visual_list})
 	return render(request, "quest/explore_b1.html", template_input) 

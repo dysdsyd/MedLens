@@ -15,7 +15,7 @@ def itertext(self):
         if e.tail:
             yield e.tail
 def crawl(search_query):
-    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+disease+"+AND+free+fulltext[filter]&retmax=100"
+    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+disease+"+AND+free+fulltext[filter]&retmax=10"
     response_page = requests.get(url)
     tree = ET.fromstring(response_page.content)
     
@@ -32,13 +32,13 @@ def crawl(search_query):
 
 def pmcid_to_crawl(pmc_id):
     #url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id
-    urllib.urlretrieve("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id, "quest/data/"+pmc_id+".xml")
+    urllib.request.urlretrieve("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id, "quest/data/"+pmc_id+".xml")
     tree = ET.parse("quest/data/"+pmc_id+".xml")
     root = tree.getroot()
     abstract = ''.join(itertext(tree.findall(".//abstract")[0]))
     full_text = ''.join(itertext(tree.findall(".//article")[0]))
     article_title = ''.join(itertext(tree.findall(".//article-title")[0]))
-    return abstract, fulltext, article_title	
+    return abstract, full_text, article_title	
 
 
 def entityToKeywords(searchTerm):
@@ -47,7 +47,7 @@ def entityToKeywords(searchTerm):
     to_search = search_query.split()[0]
     for entity in search_query.split()[1:]:
         to_search = to_search + "+AND+" + entity.lower().strip()
-    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+to_search+"+AND+free+fulltext[filter]&retmax=2"
+    url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=pmc&term="+to_search+"+AND+free+fulltext[filter]&retmax=20"
     response_page = requests.get(url)
     tree = ET.fromstring(response_page.content)
     df_kwd = pd.DataFrame(columns = ['file_name','kwd'])

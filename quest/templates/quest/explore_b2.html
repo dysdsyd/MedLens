@@ -114,7 +114,7 @@
 	<div class="container vertical-center" >
 		<div id ="loading" class = "container"> </div>
 		<div id="content" class = "container vertical-center" style="width: 80%;">
-			<form class = "col-sm-12" method = "get" action = "">
+			<form class = "col-sm-12" method = "get" action = "/explore"">
 				<fieldset>
 				<div class = "form-group row text-center">
 					<label for="search"><h2 style="font-size: 40px;">BOOGLE</h2></label>
@@ -133,7 +133,17 @@
 					</h4>
 				</div>
 				{% endif %}
+				<hr>
+				<div class="form-group row text-center col-sm-12">
+					<h3>
+						{% autoescape off %}{{article_title}}{% endautoescape %}
+					</h3>
+					<p>
+						{% autoescape off %}{{abstract}}{% endautoescape %}
+					</p>
+				</div>
 			</form>
+
 		</div>	
 	</div>
 </body>

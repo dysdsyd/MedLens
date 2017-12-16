@@ -5,17 +5,17 @@
   <meta charset="utf-8">
 
   <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,600,200italic,600italic&subset=latin,vietnamese' rel='stylesheet' type='text/css'>
-
-  <script src="http://phuonghuynh.github.io/js/bower_components/jquery/dist/jquery.min.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/d3/d3.min.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/d3-transform/src/d3-transform.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/extarray.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/misc.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/cafej/src/micro-observer.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/microplugin/src/microplugin.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/bubble-chart.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/central-click/central-click.js"></script>
-  <script src="http://phuonghuynh.github.io/js/bower_components/bubble-chart/src/plugins/lines/lines.js"></script>
+  {% load static %}
+  <script src="{% static 'javascript/jquery.min.js'%}"></script>
+  <script src="{% static 'javascript/d3.min.js'%}"></script>
+  <script src="{% static 'javascript/d3-transform.js'%}"></script>
+  <script src="{% static 'javascript/extarray.js'%}"></script>
+  <script src="{% static 'javascript/misc.js'%}"></script>
+  <script src="{% static 'javascript/micro-observer.js'%}"></script>
+  <script src="{% static 'javascript/microplugin.js'%}"></script>
+  <script src="{% static 'javascript/bubble-chart.js'%}"></script>
+  <script src="{% static 'javascript/central-click.js'%}"></script>
+  <script src="{% static 'javascript/lines.js'%}"></script>
   <style>
     .bubbleChart {
       min-width: 100px;
@@ -28,33 +28,25 @@
     }
   </style>
 </head>
-<body style="background: #000000">
+<body style="background: #000fff">
+  {{ visual_list}}
 <div class="bubbleChart"/>
 </body>
 <script type = "text/javascript">
-  $(document).ready(function (myDjangoList) {
+  var myDjangoList = {{visual_list| safe}}
+  $(document).ready(function () {
+    items = []
+   {% for node in nodes %}
 
-    nodes =[];
-
-     // create people.
-     // value corresponds with the age of the person
-
-     
-     
-     {% for node in visual_list %}
-     var node = {{node}}
-      console.log(node)
-       var count = {{ forloop.counter }}
        var i =0;
        a =[]
       {% for value in node %}
        a[i++] = '{{value}}'
        {% endfor %}
-       <!--console.log(label)-->
-       nodes.push({count:a[1] , text: a[0]})
+       items.push({text:a[0] , count: a[1]})
    {% endfor %}
 
-  var bubbleChart = new d3.svg.BubbleChart({
+   var bubbleChart = new d3.svg.BubbleChart({
     supportResponsive: true,
     //container: => use @default
     size: 600,
@@ -67,7 +59,7 @@
     //intersectInc: use @default
     //circleColor: use @default
     data: {
-      items: myDjangoList,
+      items,
       eval: function (item) {return item.count;},
       classed: function (item) {return item.text.split(" ").join("");}
     },

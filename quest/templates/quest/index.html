@@ -6,6 +6,7 @@
 	<meta charset="utf-8">
 	<style>
 		header {
+			background-color: white;
 		    min-height:150px;
 		    width:100%;
 		    position:relative;
@@ -22,7 +23,7 @@
 
 		.logo {
 		      display: inline-block;
-		      position:absolute;
+		      position:relative;
 		      top:15%;
 		      left:3%;
 		      float:left;
@@ -107,7 +108,7 @@
 				<div class="navbar-header">
 					<a class="navbar-brand">
 						<!--img src= "{% static "media/zslogo.jpg" %}" width = "150" height = "130" class="logo" alt=""-->
-						<h1 style="color: black; opacity: .5; font-size: 60px;"><strong>BOOGLE</strong></h1>
+						<h1 style="color: #000000; opacity: .6; font-size: 80px;"><strong><font color="#dd8047">M</font>ed<font color="#dd8047">L</font>ens</strong></h1>
 					</a>
 				</div>
 			</div>
@@ -117,11 +118,16 @@
 	<div class="container pull-center">
 		<div class="container text-center" style="margin:auto;">
 			<form method="get" action="/explore">
-			<div class="container well well-sm col-sm-5" style="margin: 2%; padding:10%">
-				<button type="button" class="btn btn-info btn-primary" style="font-size: 28px; height:50%; background: #686868;" n data-toggle="modal" data-target="#upload">Upload Your Data</button>
+			<div class="container col-sm-5 text-center" style="margin: 2%; padding:3%; text-align: center;">
+				<img src= "{% static "media/upload.png" %}" alt="" type="button" data-toggle="modal" data-target="#upload" style="width: 40%; height: 40%;">
+				<br>
+				<button type="button" class="btn btn-info btn-primary" style="font-size: 100%; background: #333333; width: 40%; height: auto; border-color: #333333; margin-top: 3%" data-toggle="modal" data-target="#upload">Upload Data</button>
 			</div>
-			<div class="container well well-sm col-sm-5" style="margin: 2%; padding:10%; ">
-				<input type="Submit" value="Explore Your Data" class="btn btn-info btn-primary" style="font-size: 28px; height:50%; background: #686868;" name="Explore Your Data">
+			<div class="container col-sm-5 text-center" style="margin: 2%; padding:3%; text-align: center;">
+
+				<img src= "{% static "media/explore.png" %}" alt="" type="Submit" value="Explore Libraries" style="width: 40%; height: 40%;">
+				<br>
+				<input type="Submit" value="Explore Libraries" class="btn btn-info btn-primary" style="font-size: 100%; background: #333333; width: 40%; height: auto; border-color: #333333; margin-top: 3%" name="Explore Libraries">
 			</div>	
 			</form>
 			<!-- Modal -->
@@ -142,7 +148,7 @@
 		                    {% csrf_token %}
 		                    <input type="file" name="myfile">
 		                    <br>
-		                    <button type="submit">Upload</button>
+		                    <button type="submit" class="btn-primary">Upload</button>
 		                  </form>
 		                  {% if uploaded_file_url %}
 		                    <p>File uploaded at: <a href="{{ uploaded_file_url }}">{{ uploaded_file_url }}</a></p>
@@ -157,8 +163,11 @@
 			  
 			</div>
 			</div>
-
 		</div>
+		<br>
+		<br>
+		<br>
+		<hr>
 	</div>
 
 

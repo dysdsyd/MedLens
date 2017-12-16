@@ -45,9 +45,9 @@ def pmcid_to_crawl(pmc_id):
     urllib.request.urlretrieve("https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&id="+pmc_id, "quest/data/"+pmc_id+".xml")
     tree = ET.parse("quest/data/"+pmc_id+".xml")
     root = tree.getroot()
-    abstract = ''.join(itertext(tree.findall(".//abstract")[0]))
-    full_text = ''.join(itertext(tree.findall(".//article")[0]))
-    article_title = ''.join(itertext(tree.findall(".//article-title")[0]))
+    abstract = ''.join(itertext(tree.findall(".//abstract")[0])).replace("\n"," ")
+    full_text = ''.join(itertext(tree.findall(".//article")[0])).replace("\n"," ")
+    article_title = ''.join(itertext(tree.findall(".//article-title")[0])).replace("\n"," ")
     return abstract, full_text, article_title	
 
 

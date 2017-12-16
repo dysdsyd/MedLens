@@ -1,0 +1,108 @@
+<?xml version="1.0" ?>
+<!DOCTYPE pmc-articleset PUBLIC "-//NLM//DTD ARTICLE SET 2.0//EN" "https://dtd.nlm.nih.gov/ncbi/pmc/articleset/nlm-articleset-2.0.dtd">
+<pmc-articleset><article xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" article-type="research-article">
+  <!--The publisher of this article does not allow downloading of the full text in XML form.-->
+  <?properties manuscript?>
+  <front>
+    <journal-meta>
+      <journal-id journal-id-type="nlm-journal-id">101552619</journal-id>
+      <journal-id journal-id-type="pubmed-jr-id">38967</journal-id>
+      <journal-id journal-id-type="nlm-ta">Discrete Continuous Dyn Syst Ser B</journal-id>
+      <journal-id journal-id-type="iso-abbrev">Discrete Continuous Dyn Syst Ser B</journal-id>
+      <journal-title-group>
+        <journal-title>Discrete and continuous dynamical systems. Series B</journal-title>
+      </journal-title-group>
+      <issn pub-type="ppub">1531-3492</issn>
+      <issn pub-type="epub">1553-524X</issn>
+    </journal-meta>
+    <article-meta>
+      <article-id pub-id-type="pmc">5730097</article-id>
+      <article-id pub-id-type="doi">10.3934/dcdsb.2016.21.399</article-id>
+      <article-id pub-id-type="manuscript">HHSPA922682</article-id>
+      <article-categories>
+        <subj-group subj-group-type="heading">
+          <subject>Article</subject>
+        </subj-group>
+      </article-categories>
+      <title-group>
+        <article-title>COMPUTATION OF &#x211B; IN AGE-STRUCTURED EPIDEMIOLOGICAL MODELS WITH MATERNAL AND TEMPORARY IMMUNITY</article-title>
+      </title-group>
+      <contrib-group>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Feng</surname>
+            <given-names>Zhilan</given-names>
+          </name>
+          <!--<email>fengz@purdue.edu</email>-->
+          <aff id="A1">Department of Mathematics, Purdue University, 150 N. University Street, West Lafayette, IN 47907-2067, USA</aff>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Han</surname>
+            <given-names>Qing</given-names>
+          </name>
+          <!--<email>han85@purdue.edu</email>-->
+          <aff id="A2">Department of Mathematics, Purdue University, 150 N. University Street, West Lafayette, IN 47907-2067, USA</aff>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Qiu</surname>
+            <given-names>Zhipeng</given-names>
+          </name>
+          <!--<email>nustqzp@njust.edu.cn</email>-->
+          <aff id="A3">Department of Applied mathematics, Nanjing University of Science and Technology, Nanjing 210094, China</aff>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Hill</surname>
+            <given-names>Andrew N.</given-names>
+          </name>
+          <!--<email>ahill2@cdc.gov</email>-->
+          <aff id="A4">National Center for HIV/AIDS, Viral Hepatitis, STD, and TB Prevention, 1600 Clifton Road, NE, Atlanta, GA 30333, USA</aff>
+        </contrib>
+        <contrib contrib-type="author">
+          <name>
+            <surname>Glasser</surname>
+            <given-names>John W.</given-names>
+          </name>
+          <!--<email>jglasser@cdc.gov</email>-->
+          <aff id="A5">National Center for Immunization and Respiratory Diseases, 1600 Clifton Road, NE, Atlanta, GA 30333, USA</aff>
+        </contrib>
+      </contrib-group>
+      <pub-date pub-type="nihms-submitted">
+        <day>25</day>
+        <month>11</month>
+        <year>2017</year>
+      </pub-date>
+      <pub-date pub-type="epub">
+        <day>1</day>
+        <month>11</month>
+        <year>2015</year>
+      </pub-date>
+      <pub-date pub-type="ppub">
+        <month>3</month>
+        <year>2016</year>
+      </pub-date>
+      <pub-date pub-type="pmc-release">
+        <day>14</day>
+        <month>12</month>
+        <year>2017</year>
+      </pub-date>
+      <volume>21</volume>
+      <issue>2</issue>
+      <fpage>399</fpage>
+      <lpage>415</lpage>
+      <!--elocation-id from pubmed: 10.3934/dcdsb.2016.21.399-->
+      <abstract>
+        <p id="P1">For infectious diseases such as pertussis, susceptibility is determined by immunity, which is chronological age-dependent. We consider an age-structured epidemiological model that accounts for both passively acquired maternal antibodies that decay and active immunity that wanes, permitting reinfection. The model is a 6-dimensional system of partial differential equations (PDE). By assuming constant rates within each age-group, the PDE system can be reduced to an ordinary differential equation (ODE) system with aging from one age-group to the next. We derive formulae for the effective reproduction number &#x211B; and provide their biological interpretation in some special cases. We show that the disease-free equilibrium is stable when &#x211B; &lt; 1 and unstable if &#x211B; &gt; 1.</p>
+      </abstract>
+      <kwd-group>
+        <kwd>Age-structured epidemiological model</kwd>
+        <kwd>reproduction numbers</kwd>
+        <kwd>partial immunity</kwd>
+        <kwd>multiple infections</kwd>
+      </kwd-group>
+    </article-meta>
+  </front>
+</article>
+</pmc-articleset>

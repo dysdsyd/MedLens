@@ -119,6 +119,11 @@
 					</h4>
 				</div>
 				{% endif %}
+				<div class="form-group row text-center col-sm-12">
+					<p>
+						{% autoescape off %}{{passage_a}}{% endautoescape %}
+					</p>
+				</div>
 			</form>
 		</div>	
 	</div>
@@ -126,4 +131,4 @@
 		<img src= "{% static "media/docyou.png" %}" alt="" class="pull-bottom" style="width: 20%; height: auto; position:absolute; bottom:0;">
 	</div>
 </body>
-</html>
+</html> 

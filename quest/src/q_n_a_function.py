@@ -18,7 +18,9 @@ def get_answer(passage, question):
 
 	a = Popen("python -m allennlp.run predict \quest/src/qna_model.gz \quest/src/examples.jsonl", stdout = PIPE, shell = True).stdout.read()
 	a = a.decode('utf-8')
-
+	print("---------------------------------")
+	print(a)
+	print("---------------------------------")
 	return  a[a.index('"best_span_str"')+18:-3]
 
 

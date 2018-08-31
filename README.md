@@ -5,7 +5,7 @@ Team : [Akhil Gupta](https://www.linkedin.com/in/guptakhil/) | [Ajay Unagar](htt
 
 Special Thanks to [Naman Gandhi](https://www.linkedin.com/in/namangandhi/)
 
+## License
 
-
-
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
 

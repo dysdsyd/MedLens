@@ -11,12 +11,12 @@ Scientists and researchers are faced with arduous task of perusing through resea
 
 
 ## Requirements
-Python 3.5
-Django 1.11.3
-Pytorch 0.2
+Python 3.5  
+Django 1.11.3  
+Pytorch 0.2  
 
 ## Usage
-Run `pythin manage.py`
+Run `python manage.py`
 
 ## License
 

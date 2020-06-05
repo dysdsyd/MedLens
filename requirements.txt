@@ -1,4 +1,4 @@
-django==1.11.3
+django==1.11.29
 gunicorn==19.7.1
 psycopg2 
 numpy==1.13.1
